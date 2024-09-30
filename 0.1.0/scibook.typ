@@ -190,7 +190,7 @@
 // theorems
 #let definition = thmbox(
   "definition",
-  text(linguify("definition"),font:""),
+  text(linguify("definition"), font:""),
   base_level: 1,
   separator: [#h(0.5em)],
   padding: (top: 0em, bottom: 0em),
@@ -201,7 +201,7 @@
 
 #let theorem = thmbox(
   "theorem",
-  text(linguify("theorem"),font:""),
+  text(linguify("theorem"), font:""),
   base_level: 1,
   separator: [#h(0.5em)],
   padding: (top: 0em, bottom: 0.2em),
@@ -219,7 +219,7 @@
 
 #let corollary = thmbox(
   "corollary",
-  text(linguify("corollary"),font:""),
+  text(linguify("corollary"), font:""),
   // base: "theorem",
   separator: [#h(0.5em)],
   titlefmt: strong
