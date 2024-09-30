@@ -92,7 +92,7 @@
 
   set ref(supplement: it => {
     if it.func() == heading {
-      text(linguify("chapter", font: ""))
+      linguify("chapter")
     } else if it.func() == table {
       it.caption
     } else if it.func() == image {
@@ -100,7 +100,7 @@
     } else if it.func() == figure {
       it.supplement
     } else if it.func() == math.equation {
-      text(linguify("eq", font: ""))
+      linguify("eq")
     } else { }
   })
 
