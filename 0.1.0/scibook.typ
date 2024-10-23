@@ -9,7 +9,7 @@
 // physics
 #import "@preview/physica:0.9.2": *
 // theorems
-#import "@preview/ctheorems:1.1.2": *
+#import "@preview/ctheorems:1.1.3": *
 // banners
 #import "@preview/gentle-clues:1.0.0": *
 // figures
