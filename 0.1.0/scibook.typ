@@ -17,7 +17,7 @@
 // wrap
 #import "@preview/wrap-it:0.1.0": wrap-content
 // diagram
-#import "@preview/fletcher:0.5.0": diagram, node, edge
+#import "@preview/fletcher:0.5.2": diagram, node, edge
 // numbering
 #import "@preview/i-figured:0.2.4"
 // index
