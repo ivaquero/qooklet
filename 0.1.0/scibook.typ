@@ -190,7 +190,7 @@
 // theorems
 #let definition = thmbox(
   "definition",
-  text(linguify("definition"), font:""),
+  text(linguify("definition")),
   base_level: 1,
   separator: [#h(0.5em)],
   padding: (top: 0em, bottom: 0em),
@@ -201,7 +201,7 @@
 
 #let theorem = thmbox(
   "theorem",
-  text(linguify("theorem"), font:""),
+  text(linguify("theorem")),
   base_level: 1,
   separator: [#h(0.5em)],
   padding: (top: 0em, bottom: 0.2em),
@@ -211,7 +211,7 @@
 
 #let lemma = thmbox(
   "theorem",
-  text(linguify("lemma"), font: ""),
+  text(linguify("lemma")),
   separator: [#h(0.5em)],
   fill: rgb("#EFE6FF"),
   titlefmt: strong,
@@ -219,7 +219,7 @@
 
 #let corollary = thmbox(
   "corollary",
-  text(linguify("corollary"), font:""),
+  text(linguify("corollary")),
   // base: "theorem",
   separator: [#h(0.5em)],
   titlefmt: strong
@@ -227,7 +227,7 @@
 
 #let rule = thmbox(
   "",
-  text(linguify("rule"), font: ""),
+  text(linguify("rule")),
   base_level: 1,
   separator: [#h(0.5em)],
   fill: rgb("#EEFFF1"),
@@ -236,7 +236,7 @@
 
 #let algo = thmbox(
   "",
-  text(linguify("algorithm"), font: ""),
+  text(linguify("algorithm")),
   base_level: 1,
   separator: [#h(0.5em)],
   padding: (top: 0em, bottom: 0.2em),
@@ -245,14 +245,14 @@
 )
 
 // banners
-#let tip(title: text(linguify("tip"), font: ""), icon: emoji.lightbulb, ..args) = clue(
+#let tip(title: text(linguify("tip")), icon: emoji.lightbulb, ..args) = clue(
   accent-color: yellow,
   title: title,
   icon: icon,
   ..args,
 )
 
-#let alert(title: text(linguify("alert"), font: ""), icon: emoji.excl, ..args) = clue(
+#let alert(title: text(linguify("alert")), icon: emoji.excl, ..args) = clue(
   accent-color: red,
   title: title,
   icon: icon,
