@@ -130,14 +130,14 @@
     ],
   )
 
-  if outline-on == true [
-    #outline(
-      title: linguify("content"),
+  if outline-on == true {
+    outline(
+      title: lang_data.lang.at(lang).content,
       indent: auto,
       depth: 2,
     )
-    #pagebreak()
-  ]
+    pagebreak()
+  }
 
   show link: underline
   show: thmrules
