@@ -12,8 +12,8 @@
 #import "@preview/ctheorems:1.1.3": *
 // banners
 #import "@preview/gentle-clues:1.0.0": *
-// figures
-#import "@preview/subpar:0.1.1": grid as sgrid
+// subfigures
+#import "@preview/subpar:0.2.0": grid as sgrid
 // wrap
 #import "@preview/wrap-it:0.1.0": wrap-content
 // diagram
@@ -22,6 +22,7 @@
 #import "@preview/i-figured:0.2.4"
 // index
 #import "@preview/in-dexter:0.4.2": *
+
 
 #let conf(
   title: none,
