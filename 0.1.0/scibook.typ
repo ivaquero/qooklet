@@ -15,9 +15,9 @@
 // subfigures
 #import "@preview/subpar:0.2.0": grid as sgrid
 // wrap
-#import "@preview/wrap-it:0.1.0": wrap-content
+#import "@preview/wrap-it:0.1.1": wrap-content
 // diagram
-#import "@preview/fletcher:0.5.2": diagram, node, edge
+#import "@preview/fletcher:0.5.3": diagram, node, edge
 // numbering
 #import "@preview/i-figured:0.2.4"
 // index
@@ -108,20 +108,20 @@
   show heading: i-figured.reset-counters.with(level: 2)
   show math.equation: i-figured.show-equation
 
-  set figure.caption(separator: " ")
-
-  show figure: it => align(
-    center,
-    block(breakable: figure-break)[
-      #it.body#it.caption
-    ],
-  )
+  show figure.caption: it => [
+    #it.supplement
+    #context it.counter.display(it.numbering)
+    #it.body
+  ]
+  show figure.where(kind: table): set figure.caption(position: top)
 
   show raw.where(block: true): block.with(
     fill: luma(240),
-    inset: .8em,
+    inset: 0.8em,
     radius: 5pt,
     width: 100%,
+    above: 0.9em,
+    below: 1em,
   )
 
   align(
