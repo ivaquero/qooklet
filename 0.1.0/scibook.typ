@@ -4,6 +4,8 @@
 #import "@preview/indenta:0.0.3": fix-indent
 // header-footer
 #import "@preview/hydra:0.5.1": *
+// checklist
+#import "@preview/cheq:0.2.2": checklist
 // chemistry
 #import "@preview/whalogen:0.2.0": ce
 // physics
@@ -11,7 +13,7 @@
 // theorems
 #import "@preview/ctheorems:1.1.3": *
 // banners
-#import "@preview/gentle-clues:1.0.0": *
+#import "@preview/gentle-clues:1.1.0": *
 // subfigures
 #import "@preview/subpar:0.2.0": grid as sgrid
 // wrap
