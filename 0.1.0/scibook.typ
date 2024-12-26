@@ -167,6 +167,19 @@
   )
 )
 
+// tables
+#let frame2(stroke) = (
+  (x, y) => (
+    left: if x > 2 {
+      stroke
+    } else {
+      0pt
+    },
+    top: stroke,
+    bottom: stroke,
+  )
+)
+
 #let ktable(data, k, inset: 0.3em) = table(
   columns: k,
   inset: inset,
