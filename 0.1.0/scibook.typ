@@ -23,6 +23,9 @@
 #import "@preview/fletcher:0.5.3": diagram, node, edge
 // numbering
 #import "@preview/i-figured:0.2.4"
+// codes
+#import "@preview/codly:1.1.0": *
+#import "@preview/codly-languages:0.1.1": *
 // index
 #import "@preview/in-dexter:0.4.2": *
 
@@ -120,14 +123,15 @@
   ]
   show figure.where(kind: table): set figure.caption(position: top)
 
-  show raw.where(block: true): block.with(
-    fill: luma(240),
-    inset: 0.8em,
-    radius: 5pt,
-    width: 100%,
-    above: 0.9em,
-    below: 1em,
+  codly(
+    languages: codly-languages,
+    fill: rgb("#F2F3F4"),
+    zebra-fill: none,
+    inset: (x: .3em, y: .2em),
+    stroke: -1pt + rgb("#000000"),
+    radius: .5em,
   )
+  show: codly-init.with()
 
   align(
     center,
