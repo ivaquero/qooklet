@@ -26,6 +26,8 @@
 // codes
 #import "@preview/codly:1.1.0": *
 #import "@preview/codly-languages:0.1.1": *
+// annot
+#import "@preview/pinit:0.2.2": *
 // index
 #import "@preview/in-dexter:0.4.2": *
 
