@@ -20,12 +20,12 @@
 // wrap
 #import "@preview/wrap-it:0.1.1": wrap-content
 // diagram
-#import "@preview/fletcher:0.5.3": diagram, node, edge
+#import "@preview/fletcher:0.5.4": diagram, node, edge
 // numbering
 #import "@preview/i-figured:0.2.4"
 // codes
-#import "@preview/codly:1.1.0": *
-#import "@preview/codly-languages:0.1.1": *
+#import "@preview/codly:1.2.0": *
+#import "@preview/codly-languages:0.1.3": *
 // annot
 #import "@preview/pinit:0.2.2": *
 // index
