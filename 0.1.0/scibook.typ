@@ -4,7 +4,7 @@
 // indent
 #import "@preview/indenta:0.0.3": fix-indent
 // header-footer
-#import "@preview/hydra:0.5.1": *
+#import "@preview/hydra:0.5.2": *
 // checklist
 #import "@preview/cheq:0.2.2": checklist
 // chemistry
@@ -25,7 +25,7 @@
 #import "@preview/i-figured:0.2.4"
 // codes
 #import "@preview/codly:1.2.0": *
-#import "@preview/codly-languages:0.1.3": *
+#import "@preview/codly-languages:0.1.4": *
 // annot
 #import "@preview/pinit:0.2.2": *
 // index
