@@ -28,9 +28,8 @@
 #import "@preview/codly-languages:0.1.4": *
 // annot
 #import "@preview/pinit:0.2.2": *
-// index
-#import "@preview/in-dexter:0.4.2": *
-
+// excel
+#import "@preview/rexllent:0.2.3": xlsx-parser
 
 #let conf(
   title: none,
@@ -129,7 +128,7 @@
     languages: codly-languages,
     fill: rgb("#F2F3F4"),
     zebra-fill: none,
-    inset: (x: .3em, y: .2em),
+    inset: (x: .3em, y: .3em),
     stroke: -1pt + rgb("#000000"),
     radius: .5em,
   )
