@@ -25,7 +25,7 @@
 #import "@preview/i-figured:0.2.4"
 // codes
 #import "@preview/codly:1.2.0": *
-#import "@preview/codly-languages:0.1.4": *
+#import "@preview/codly-languages:0.1.6": *
 // annot
 #import "@preview/pinit:0.2.2": *
 // excel
