@@ -21,6 +21,7 @@
 #import "@preview/wrap-it:0.1.1": wrap-content
 // diagram
 #import "@preview/fletcher:0.5.4": diagram, node, edge
+#import "@preview/cetz-plot:0.1.1": *
 // numbering
 #import "@preview/i-figured:0.2.4"
 // codes
