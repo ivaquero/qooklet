@@ -30,7 +30,7 @@
 // annot
 #import "@preview/pinit:0.2.2": *
 // excel
-#import "@preview/rexllent:0.2.3": xlsx-parser
+#import "@preview/rexllent:0.3.0": xlsx-parser
 
 #let conf(
   title: none,
