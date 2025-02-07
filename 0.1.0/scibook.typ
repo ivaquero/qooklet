@@ -7,8 +7,6 @@
 #import "@preview/hydra:0.5.2": *
 // checklist
 #import "@preview/cheq:0.2.2": checklist
-// chemistry
-#import "@preview/whalogen:0.2.0": ce
 // physics
 #import "@preview/physica:0.9.4": *
 // theorems
