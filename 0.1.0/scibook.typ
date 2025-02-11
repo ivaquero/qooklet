@@ -14,7 +14,7 @@
 // banners
 #import "@preview/gentle-clues:1.1.0": *
 // subfigures
-#import "@preview/subpar:0.2.0": grid as sgrid
+#import "@preview/subpar:0.2.1": grid as sgrid
 // wrap
 #import "@preview/wrap-it:0.1.1": wrap-content
 // diagram
@@ -29,6 +29,8 @@
 #import "@preview/pinit:0.2.2": *
 // excel
 #import "@preview/rexllent:0.3.0": xlsx-parser
+// func return
+#import "@preview/eqalc:0.1.1": *
 
 #let conf(
   title: none,
