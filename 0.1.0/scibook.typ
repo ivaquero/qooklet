@@ -130,7 +130,7 @@
     fill: rgb("#F2F3F4"),
     zebra-fill: none,
     inset: (x: .3em, y: .3em),
-    stroke: -1pt + rgb("#000000"),
+    // stroke: -1pt + rgb("#000000"),
     radius: .5em,
   )
   show: codly-init.with()
