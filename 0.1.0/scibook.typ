@@ -127,6 +127,7 @@
 
   codly(
     languages: codly-languages,
+    display-name: false,
     fill: rgb("#F2F3F4"),
     zebra-fill: none,
     inset: (x: .3em, y: .3em),
