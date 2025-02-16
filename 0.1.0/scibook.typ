@@ -115,8 +115,43 @@
     },
   )
 
-  show heading: i-figured.reset-counters.with(level: 2)
-  show math.equation: i-figured.show-equation
+  show heading.where(level: 1): it => {
+    counter(math.equation).update(0)
+    it
+  }
+
+  show math.equation: it => {
+    let count = counter(heading).get()
+    let h1 = count.first()
+    let h2 = count.at(1, default: 0)
+    if it.has("label") {
+      math.equation(
+        block: true,
+        numbering: n => {
+          numbering("(1.1)", h1, n)
+        },
+        it,
+      )
+    } else {
+      it
+    }
+  }
+
+  show ref: it => {
+    let count = counter(heading).get()
+    let h1 = count.first()
+    let h2 = count.at(1, default: 0)
+
+    let el = it.element
+    if el != none and el.func() == math.equation {
+      link(
+        el.location(),
+        numbering("(1.1)", h1, counter(math.equation).at(el.location()).at(0) + 1),
+      )
+    } else {
+      it
+    }
+  }
 
   show figure.caption: it => [
     #it.supplement
@@ -143,6 +178,11 @@
     ],
   )
 
+  show outline.entry.where(level: 1): it => {
+    v(12pt, weak: true)
+    strong(it)
+  }
+
   if outline-on == true {
     outline(
       title: lang_data.lang.at(lang).content,
@@ -156,6 +196,19 @@
   show: thmrules
   show: fix-indent()
   doc
+}
+
+// ref
+#let ref-heading(label) = context {
+  let elems = query(label)
+  if elems.len() != 1 {
+    panic("found multiple elements")
+  }
+  let element = elems.first()
+  if element.func() != heading {
+    panic("label must target heading")
+  }
+  link(label, element.body)
 }
 
 // text
