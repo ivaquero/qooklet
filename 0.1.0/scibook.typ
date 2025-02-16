@@ -5,8 +5,6 @@
 #import "@preview/indenta:0.0.3": fix-indent
 // header-footer
 #import "@preview/hydra:0.5.2": *
-// checklist
-#import "@preview/cheq:0.2.2": checklist
 // physics
 #import "@preview/physica:0.9.4": *
 // theorems
