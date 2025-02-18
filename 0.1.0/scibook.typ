@@ -1,6 +1,6 @@
 
 // multi-languages
-#import "@preview/linguify:0.4.1": *
+#import "@preview/linguify:0.4.2": *
 // indent
 #import "@preview/indenta:0.0.3": fix-indent
 // header-footer
@@ -21,14 +21,14 @@
 // numbering
 #import "@preview/i-figured:0.2.4"
 // codes
-#import "@preview/codly:1.2.0": *
+#import "@preview/codly:1.2.0": codly-init, codly
 #import "@preview/codly-languages:0.1.6": *
 // annot
 #import "@preview/pinit:0.2.2": *
 // excel
 #import "@preview/rexllent:0.3.0": xlsx-parser
 // func return
-#import "@preview/eqalc:0.1.2": *
+#import "@preview/eqalc:0.1.3": *
 
 #let conf(
   title: none,
