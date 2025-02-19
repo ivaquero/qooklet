@@ -8,7 +8,7 @@
 // physics
 #import "@preview/physica:0.9.4": *
 // theorems
-#import "@preview/ctheorems:1.1.3": thmbox
+#import "@preview/ctheorems:1.1.3": thmbox, thmrules
 // banners
 #import "@preview/gentle-clues:1.1.0": clue
 // subfigures
