@@ -1,25 +1,22 @@
 
 // multi-languages
-#import "@preview/linguify:0.4.2": *
+#import "@preview/linguify:0.4.2": linguify
 // indent
 #import "@preview/indenta:0.0.3": fix-indent
 // header-footer
-#import "@preview/hydra:0.5.2": *
+#import "@preview/hydra:0.6.0": hydra
 // physics
 #import "@preview/physica:0.9.4": *
 // theorems
-#import "@preview/ctheorems:1.1.3": *
+#import "@preview/ctheorems:1.1.3": thmbox
 // banners
-#import "@preview/gentle-clues:1.1.0": *
+#import "@preview/gentle-clues:1.1.0": clue
 // subfigures
 #import "@preview/subpar:0.2.1": grid as sgrid
 // wrap
 #import "@preview/wrap-it:0.1.1": wrap-content
 // diagram
-#import "@preview/fletcher:0.5.4": diagram, node, edge
-#import "@preview/cetz-plot:0.1.1": *
-// numbering
-#import "@preview/i-figured:0.2.4"
+#import "@preview/fletcher:0.5.5": diagram, node, edge
 // codes
 #import "@preview/codly:1.2.0": codly-init, codly
 #import "@preview/codly-languages:0.1.6": *
