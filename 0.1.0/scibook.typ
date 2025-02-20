@@ -1,12 +1,10 @@
 
 // multi-languages
-#import "@preview/linguify:0.4.2": linguify
-// indent
-#import "@preview/indenta:0.0.3": fix-indent
+#import "@preview/linguify:0.4.2": linguify, set-database
 // header-footer
 #import "@preview/hydra:0.6.0": hydra
 // physics
-#import "@preview/physica:0.9.4": *
+#import "@preview/physica:0.9.4": dd, dv, pdv, dmat
 // theorems
 #import "@preview/ctheorems:1.1.3": thmbox, thmrules
 // banners
@@ -19,9 +17,9 @@
 #import "@preview/fletcher:0.5.5": diagram, node, edge
 // codes
 #import "@preview/codly:1.2.0": codly-init, codly
-#import "@preview/codly-languages:0.1.6": *
+#import "@preview/codly-languages:0.1.7": codly-languages
 // annot
-#import "@preview/pinit:0.2.2": *
+#import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-place
 // excel
 #import "@preview/rexllent:0.3.0": xlsx-parser
 // func return
@@ -44,6 +42,9 @@
   lang: "zh",
   doc,
 ) = {
+  let lang_data = toml("lang.toml")
+  set-database(lang_data)
+
   set page(
     paper: "a4",
     numbering: "1",
@@ -75,10 +76,13 @@
   set heading(numbering: "1.1")
 
   set par(
-    first-line-indent: 2em,
+    first-line-indent: (
+      amount: 1.5em,
+      all: true,
+    ),
     justify: true,
-    leading: par-leading,
-    linebreaks: "optimized",
+    leading: 1em,
+    spacing: 1em,
   )
   set block(above: block-above, below: block-below)
   set list(indent: list-indent)
@@ -90,9 +94,6 @@
     size: 10.5pt,
     lang: lang,
   )
-
-  let lang_data = toml("lang.toml")
-  set-database(lang_data)
 
   set ref(
     supplement: it => {
@@ -189,21 +190,7 @@
 
   show link: underline
   show: thmrules
-  show: fix-indent()
   doc
-}
-
-// ref
-#let ref-heading(label) = context {
-  let elems = query(label)
-  if elems.len() != 1 {
-    panic("found multiple elements")
-  }
-  let element = elems.first()
-  if element.func() != heading {
-    panic("label must target heading")
-  }
-  link(label, element.body)
 }
 
 // text
