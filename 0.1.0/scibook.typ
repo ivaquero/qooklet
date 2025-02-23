@@ -4,11 +4,11 @@
 // header-footer
 #import "@preview/hydra:0.6.0": hydra
 // physics
-#import "@preview/physica:0.9.4": dd, dv, pdv, dmat
+#import "@preview/physica:0.9.4": dd, dv, pdv, dmat, grad
 // theorems
 #import "@preview/ctheorems:1.1.3": thmbox, thmrules
 // banners
-#import "@preview/gentle-clues:1.1.0": clue
+#import "@preview/gentle-clues:1.2.0": clue, tip, warning
 // subfigures
 #import "@preview/subpar:0.2.1": grid as sgrid
 // wrap
@@ -303,19 +303,4 @@
   padding: (top: 0em, bottom: 0.2em),
   fill: rgb("#FAF2FB"),
   titlefmt: strong,
-)
-
-// banners
-#let tip(title: text(linguify("tip")), icon: emoji.lightbulb, ..args) = clue(
-  accent-color: yellow,
-  title: title,
-  icon: icon,
-  ..args,
-)
-
-#let alert(title: text(linguify("alert")), icon: emoji.excl, ..args) = clue(
-  accent-color: red,
-  title: title,
-  icon: icon,
-  ..args,
 )
