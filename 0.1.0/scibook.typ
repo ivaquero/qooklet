@@ -4,7 +4,7 @@
 // header-footer
 #import "@preview/hydra:0.6.0": hydra
 // physics
-#import "@preview/physica:0.9.4": dd, dv, pdv, dmat, grad
+#import "@preview/physica:0.9.4": *
 // theorems
 #import "@preview/ctheorems:1.1.3": thmbox, thmrules
 // banners
