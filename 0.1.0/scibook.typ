@@ -37,7 +37,7 @@
   par-leading: 1em,
   list-indent: 1.2em,
   block-above: 1em,
-  block-below: 0.5em,
+  block-below: 1em,
   figure-break: false,
   lang: "zh",
   doc,
@@ -77,7 +77,7 @@
 
   set par(
     first-line-indent: (
-      amount: 1.5em,
+      amount: 2em,
       all: true,
     ),
     justify: true,
