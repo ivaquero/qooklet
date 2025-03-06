@@ -4,7 +4,7 @@
 // header-footer
 #import "@preview/hydra:0.6.0": hydra
 // physics
-#import "@preview/physica:0.9.4": *
+#import "@preview/physica:0.9.5": *
 // theorems
 #import "@preview/ctheorems:1.1.3": thmbox, thmrules
 // banners
@@ -22,8 +22,6 @@
 #import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-place
 // excel
 #import "@preview/rexllent:0.3.0": xlsx-parser
-// func return
-#import "@preview/eqalc:0.1.3": *
 
 #let conf(
   title: none,
