@@ -17,7 +17,7 @@
 #import "@preview/fletcher:0.5.6": diagram, node, edge
 // codes
 #import "@preview/codly:1.2.0": codly-init, codly
-#import "@preview/codly-languages:0.1.7": codly-languages
+#import "@preview/codly-languages:0.1.8": codly-languages
 // annot
 #import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-place
 // excel
