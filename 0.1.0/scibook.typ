@@ -14,7 +14,7 @@
 // wrap
 #import "@preview/wrap-it:0.1.1": wrap-content
 // diagram
-#import "@preview/fletcher:0.5.6": diagram, node, edge
+#import "@preview/fletcher:0.5.7": diagram, node, edge
 // codes
 #import "@preview/codly:1.2.0": codly-init, codly
 #import "@preview/codly-languages:0.1.8": codly-languages
