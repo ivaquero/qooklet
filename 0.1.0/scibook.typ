@@ -10,13 +10,13 @@
 // banners
 #import "@preview/gentle-clues:1.2.0": *
 // subfigures
-#import "@preview/subpar:0.2.1": grid as sgrid
+#import "@preview/subpar:0.2.2": grid as sgrid
 // wrap
 #import "@preview/wrap-it:0.1.1": wrap-content
 // diagram
 #import "@preview/fletcher:0.5.7": diagram, node, edge
 // codes
-#import "@preview/codly:1.2.0": codly-init, codly
+#import "@preview/codly:1.3.0": codly-init, codly
 #import "@preview/codly-languages:0.1.8": codly-languages
 // annot
 #import "@preview/pinit:0.2.2": pin, pinit-highlight, pinit-place
