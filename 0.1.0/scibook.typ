@@ -1,8 +1,7 @@
-
 // multi-languages
 #import "@preview/linguify:0.4.2": linguify, set-database
 // header-footer
-#import "@preview/hydra:0.6.0": hydra
+#import "@preview/hydra:0.6.1": hydra
 // physics
 #import "@preview/physica:0.9.5": *
 // theorems
@@ -132,16 +131,13 @@
   }
 
   show ref: it => {
-    let count = counter(heading).get()
-    let h1 = count.first()
-    let h2 = count.at(1, default: 0)
-
     let el = it.element
-    if el != none and el.func() == math.equation {
-      link(
-        el.location(),
-        numbering("(1.1)", h1, counter(math.equation).at(el.location()).at(0) + 1),
-      )
+    if el.func() == math.equation {
+      let loc = el.location()
+      let h1 = counter(heading).at(loc).first()
+      let index = counter(math.equation).at(loc).first()
+
+      link(loc, numbering("(1.1)", h1, index + 1))
     } else {
       it
     }
