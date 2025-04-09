@@ -1,8 +1,11 @@
 [package]
-    name        = "scibook"
-    version     = "0.1.0"
-    entrypoint  = "scibook.typ"
-    authors     = ["ivaquero"]
-    license     = "MIT"
-    description = "Template for Scientific Books"
-    repository  = ""
+    name = "qooklet"
+    version = "0.1.0"
+    compiler = "0.11.0"
+    repository = "https://github.com/ivaquero/qooklet.git"
+    entrypoint = "src/lib.typ"
+    authors = ["ivaquero"]
+    license = "MIT"
+    description = "A quick start template for scientific manuals and books"
+    categories = ["book", "booklet"]
+    keywords = ["book", "booklet"]
