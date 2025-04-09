@@ -34,9 +34,9 @@ A quick start template for scientific booklets.
 )
 ```
 
-See [examples.typ](examples/example.typ).
+See [examples.typ](0.1.0/examples/example.typ).
 
-![example](examples/example.png)
+![example](0.1.0/examples/example.png)
 
 ## Clone Official Repository
 
