@@ -9,3 +9,4 @@
     description = "A quick start template for scientific booklets"
     categories = ["book", "booklet"]
     keywords = ["book", "booklet"]
+    exclude = ["examples"]

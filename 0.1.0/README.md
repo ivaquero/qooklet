@@ -34,18 +34,20 @@ A quick start template for scientific booklets.
 )
 ```
 
-## Clone Official Repository
-
-Clone the [qooklet](https://github.com/ivaquero/qooklet) repository to your `@local` workspace:
-
-- Linux：
-  - `$XDG_DATA_HOME/typst/packages/local`
-  - `~/.local/share/typst/packages/local`
-- macOS：`~/Library/Application\ Support/typst/packages/local`
-- Windows：`%APPDATA%/typst/packages/local`
-
-Import `qooklet` in the document
+## Get Started
 
 ```typst
 #import "@local/qooklet:0.1.0": *
+#show: doc => conf(
+  title: "Bellman Eqation",
+  author: "ivaquero",
+  header-cap: "Reinforcement Learning",
+  footer-cap: "ivaquero",
+  outline-on: false,
+  doc,
+)
 ```
+
+See [examples.typ](./examples/example.typ).
+
+![example](examples/example.png)
