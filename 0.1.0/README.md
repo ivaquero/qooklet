@@ -20,9 +20,21 @@ A quick start template for scientific booklet.
   - auto numbering based on chapter (using [ctheorems](https://github.com/sahasatvik/typst-theorems))
   - multilingual (using [linguify](https://github.com/typst-community/linguify))
 
-## Usage
+## Get Started
 
-### Clone Official Repository
+```typst
+#import "@preview/qooklet:0.1.0": *
+#show: doc => conf(
+  title: "Bellman Eqation",
+  author: "ivaquero",
+  header-cap: "Reinforcement Learning",
+  footer-cap: "ivaquero",
+  outline-on: false,
+  doc,
+)
+```
+
+## Clone Official Repository
 
 Clone the [qooklet](https://github.com/ivaquero/qooklet) repository to your `@local` workspace:
 
@@ -31,8 +43,6 @@ Clone the [qooklet](https://github.com/ivaquero/qooklet) repository to your `@lo
   - `~/.local/share/typst/packages/local`
 - macOS：`~/Library/Application\ Support/typst/packages/local`
 - Windows：`%APPDATA%/typst/packages/local`
-
-### Import the Template
 
 Import `qooklet` in the document
 

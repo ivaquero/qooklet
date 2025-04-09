@@ -1,5 +1,5 @@
 [config]
-    default-lang = "zh"
+    default-lang = "en"
 
 [lang.en]
     chapter = "Chapter"

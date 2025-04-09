@@ -27,7 +27,7 @@
   author: (),
   header-cap: [],
   footer-cap: [],
-  outline-on: true,
+  outline-on: false,
   eqnumstyle: "1",
   eqnumsep: ".",
   eqnumlevel: 1,
@@ -36,7 +36,7 @@
   block-above: 1em,
   block-below: 1em,
   figure-break: false,
-  lang: "zh",
+  lang: "en",
   doc,
 ) = {
   let lang_data = toml("lang.toml")
