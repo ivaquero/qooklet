@@ -1,6 +1,6 @@
 # Qooklet
 
-A quick start template for scientific booklet.
+A quick start template for scientific booklets.
 
 ## Features
 
