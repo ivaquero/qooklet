@@ -11,7 +11,7 @@ A quick start utility for scientific booklets.
   - auto numbering based on chapter
   - subfigure (using [subpar](https://github.com/tingerrr/subpar))
 - Table
-  - read as three-line table (`#ktable(data, k, inset: 0.3em)`)
+  - read as three-line table (`#ktable(data, column-count, inset: 0.3em)`)
   - read from .xlsx (using [rexllent](https://github.com/hongjr03/typst-rexllent))
 - Code Block
   - highlighting (using [coldly](https://github.com/Dherse/codly))

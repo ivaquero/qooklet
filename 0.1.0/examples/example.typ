@@ -32,3 +32,13 @@ $
   v(s) &= max_(π(s) ∈ ∏(s)) ∑_(a ∈ 𝒜) π(a|s)(∑_(r ∈ ℛ) p(r|s, a) r + γ ∑_(s^′ ∈ 𝒮) p(s^′|s, a) v(s^′)), quad &∀s ∈ 𝒮 \
   &= max_(π(s) ∈ ∏(s)) ∑_(a ∈ 𝒜) π(a|s) q(s, a), quad &∀s ∈ 𝒮
 $ <boe>
+
+= Case: Shortest Path of Islands
+
+#let csv1 = csv("islands.csv")
+#figure(
+  ktable(csv1, 9, inset: 0.31em),
+  caption: "Geographic Info of Islands",
+  supplement: "Table",
+  kind: table,
+)
