@@ -129,7 +129,7 @@
 
   show ref: it => {
     let el = it.element
-    if el.func() == math.equation {
+    if el != none and el.func() == math.equation {
       let loc = el.location()
       let h1 = counter(heading).at(loc).first()
       let index = counter(math.equation).at(loc).first()
@@ -214,8 +214,8 @@
 )
 
 // table: reading as three-line table
-#let ktable(data, k, inset: 0.3em) = table(
-  columns: k,
+#let ktable(data, column-count, inset: 0.3em) = table(
+  columns: column-count,
   inset: inset,
   align: center + horizon,
   stroke: three-line(rgb("000")),
