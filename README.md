@@ -23,7 +23,7 @@ A quick start utility for scientific booklets.
 ## Get Started
 
 ```typst
-#import "@local/qooklet:0.1.0": *
+#import "@preview/qooklet:0.1.1": *
 #show: doc => conf(
   title: "Bellman Eqation",
   author: "ivaquero",
@@ -42,9 +42,9 @@ A quick start utility for scientific booklets.
 )
 ```
 
-See [examples.typ](0.1.0/examples/example.typ).
-
 ![example](0.1.0/examples/example.png)
+
+For more details, see [examples.typ](0.1.0/examples/example.typ).
 
 ## Clone Official Repository
 
@@ -61,3 +61,5 @@ Import `qooklet` in the document
 ```typst
 #import "@local/qooklet:0.1.0": *
 ```
+
+> For developement convinience, local repo never changes the version

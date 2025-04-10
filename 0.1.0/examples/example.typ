@@ -24,6 +24,10 @@
   $ <bellman>
 ]
 
+```typst
+
+```
+
 = Bellman Optimal Eqation
 
 By Eq. @bellman,...
@@ -34,6 +38,16 @@ $
 $ <boe>
 
 = Case: Shortest Path of Islands
+
+```typst
+#let csv1 = csv("islands.csv")
+#figure(
+  ktable(csv1, 9, inset: 0.31em),
+  caption: "Geographic Info of Islands",
+  supplement: "Table",
+  kind: table,
+)
+```
 
 #let csv1 = csv("islands.csv")
 #figure(
