@@ -22,6 +22,8 @@ A quick start utility for scientific booklets.
 
 ## Get Started
 
+Import `qooklet` from the `@preview` namespace.
+
 ```typst
 #import "@preview/qooklet:0.1.1": *
 #show: doc => conf(
@@ -41,6 +43,11 @@ A quick start utility for scientific booklets.
   doc,
 )
 ```
+
+The function `ktable(data, k, stroke: three-line(rgb("000")), inset: 0.3em)` is a shortcut of reading .csv, where `k` is the number of columns, and for stroke, `qooklet` provide 2 predefined styles
+
+- `three-line(stroke-color)`: default style, for three-line table
+- `no-left-right(stroke-color)`: for grid without left border and right border
 
 ![example](0.1.0/examples/example.png)
 

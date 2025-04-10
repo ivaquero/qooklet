@@ -189,36 +189,36 @@
 #let ctext(body) = text(body, font: fonts.at("zh").math)
 
 // table: three-line
-#let three-line(stroke) = (
+#let three-line(stroke-color) = (
   (x, y) => (
     top: if y < 2 {
-      stroke
+      stroke-color
     } else {
       0pt
     },
-    bottom: stroke,
+    bottom: stroke-color,
   )
 )
 
 // table: grid without left border and right border
-#let no-left-right(stroke) = (
+#let no-left-right(stroke-color) = (
   (x, y) => (
     left: if x > 2 {
-      stroke
+      stroke-color
     } else {
       0pt
     },
-    top: stroke,
-    bottom: stroke,
+    top: stroke-color,
+    bottom: stroke-color,
   )
 )
 
 // table: reading as three-line table
-#let ktable(data, column-count, inset: 0.3em) = table(
-  columns: column-count,
+#let ktable(data, k, stroke: three-line(rgb("000")), inset: 0.3em) = table(
+  columns: k,
   inset: inset,
   align: center + horizon,
-  stroke: three-line(rgb("000")),
+  stroke: stroke,
   ..data.flatten(),
 )
 
