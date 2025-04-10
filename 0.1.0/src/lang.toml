@@ -10,9 +10,8 @@
     corollary = "Corollary"
     rule = "Rule"
     algorithm = "Algorithm"
-    alert = "Alert"
-    tip = "Tip"
     eq = " Eq."
+    tip = "Tip"
 
 [lang.zh]
     chapter = "章节"
@@ -23,6 +22,5 @@
     corollary = "推论"
     rule = "法则"
     algorithm = "算法"
-    alert = "注意"
-    tip = "提示"
     eq = "式 "
+    tip = "提示"

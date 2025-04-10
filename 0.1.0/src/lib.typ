@@ -188,8 +188,8 @@
 #let fonts = toml("fonts.toml")
 #let ctext(body) = text(body, font: fonts.at("zh").math)
 
-// tables
-#let frame(stroke) = (
+// table: three-line
+#let three-line(stroke) = (
   (x, y) => (
     top: if y < 2 {
       stroke
@@ -200,8 +200,8 @@
   )
 )
 
-// tables
-#let frame2(stroke) = (
+// table: grid without left border and right border
+#let no-left-right(stroke) = (
   (x, y) => (
     left: if x > 2 {
       stroke
@@ -213,15 +213,16 @@
   )
 )
 
+// table: reading as three-line table
 #let ktable(data, k, inset: 0.3em) = table(
   columns: k,
   inset: inset,
   align: center + horizon,
-  stroke: frame(rgb("000")),
+  stroke: three-line(rgb("000")),
   ..data.flatten(),
 )
 
-// codes
+// codes: reading
 #let code(text, lang: "python", breakable: true, width: 100%) = block(
   fill: rgb("#F3F3F3"),
   stroke: rgb("#DBDBDB"),
@@ -294,4 +295,11 @@
   padding: (top: 0em, bottom: 0.2em),
   fill: rgb("#FAF2FB"),
   titlefmt: strong,
+)
+
+#let tip(title: linguify("tip"), icon: emoji.bell, ..args) = clue(
+  accent-color: rgb("#e5c525e9"),
+  title: title,
+  icon: icon,
+  ..args,
 )
