@@ -24,7 +24,7 @@
 
 #let qooklet(
   title: none,
-  author: (),
+  author: [],
   header-cap: [],
   footer-cap: [],
   outline-on: false,
@@ -73,13 +73,13 @@
   set par(
     first-line-indent: (
       amount: 2em,
-      all: true,
+      all: if lang == "zh" { true } else { false },
     ),
     justify: true,
     leading: 1em,
     spacing: 1em,
   )
-  set block(above: block-above, below: block-below)
+  set block(above: block-above, below: block-below, radius: 20%)
   set list(indent: list-indent)
   set enum(indent: list-indent)
 

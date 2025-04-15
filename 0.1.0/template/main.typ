@@ -2,7 +2,7 @@
 
 #show: qooklet.with(
   title: none,
-  author: (),
+  author: [],
   header-cap: [],
   footer-cap: [],
   outline-on: false,
