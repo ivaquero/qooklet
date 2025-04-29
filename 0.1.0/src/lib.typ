@@ -263,6 +263,16 @@
   // stroke: rgb("#000000")
 )
 
+#let law = thmbox(
+  "law",
+  text(linguify("law")),
+  base_level: 1,
+  separator: [#h(0.5em)],
+  padding: (top: 0em, bottom: 0.2em),
+  fill: rgb("#ddf3f4"),
+  // stroke: rgb("#000000")
+)
+
 #let lemma = thmbox(
   "theorem",
   text(linguify("lemma")),
