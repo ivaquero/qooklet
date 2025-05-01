@@ -49,9 +49,10 @@ The function `ktable(data, k, stroke: three-line(rgb("000")), inset: 0.3em)` is 
 - `three-line(stroke-color)`: default style, for three-line table
 - `no-left-right(stroke-color)`: for grid without left border and right border
 
-![example](0.1.0/thumbnail.png)
+![example](https://raw.githubusercontent.com/ivaquero/typst-qooklet/refs/heads/main/example.png)
+![example2](https://raw.githubusercontent.com/ivaquero/typst-qooklet/refs/heads/main/example2.png)
 
-For more details, see [examples.typ](0.1.0/examples/example.typ).
+For more details, see [examples.typ](https://github.com/ivaquero/typst-qooklet/blob/main/0.1.0/examples/example.typ).
 
 ## Clone Official Repository
 
