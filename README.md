@@ -55,7 +55,7 @@ For more details, see [examples.typ](0.1.0/examples/example.typ).
 
 ## Clone Official Repository
 
-Clone the [qooklet](https://github.com/ivaquero/qooklet) repository to your `@local` workspace:
+Clone the [qooklet](https://github.com/ivaquero/typst-qooklet) repository to your `@local` workspace:
 
 - Linux：
   - `$XDG_DATA_HOME/typst/packages/local`
