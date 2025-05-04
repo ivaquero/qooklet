@@ -25,7 +25,7 @@ A quick start template for scientific booklets.
 Import `qooklet` from the `@preview` namespace.
 
 ```typst
-#import "@preview/qooklet:0.2.0": *
+#import "@preview/qooklet:0.2.1": *
 #show: qooklet.with(
   title: "Bellman Eqation",
   author: "ivaquero",
