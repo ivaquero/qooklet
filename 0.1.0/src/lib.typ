@@ -11,10 +11,6 @@
 // codes
 #import "@preview/codly:1.3.0": codly-init, codly
 #import "@preview/codly-languages:0.1.8": codly-languages
-// subfigures
-#import "@preview/subpar:0.2.2": grid as sgrid
-// excel
-#import "@preview/rexllent:0.3.0": xlsx-parser
 
 #let qooklet(
   title: none,
@@ -288,7 +284,7 @@
   text(linguify("rule")),
   base_level: 1,
   separator: [#h(0.5em)],
-  fill: rgb("#EEFFF1"),
+  fill: rgb("#f8eed3"),
   titlefmt: strong,
 )
 
