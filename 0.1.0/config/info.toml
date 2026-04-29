@@ -1,13 +1,13 @@
 [global]
-    title = ""
-    author = ""
-    footer = ""
-    header = ""
-    lang = "en"
+title = ""
+author = ""
+footer = ""
+header = ""
+lang = "en"
 
 [example]
-    title = "Qooklet Booklet Mode"
-    author = "ivaquero"
-    footer = "Qooklet Example"
-    header = ""
-    lang = "en"
+title = "Qooklet Booklet Mode"
+author = "ivaquero"
+footer = "Qooklet Example"
+header = ""
+lang = "en"
