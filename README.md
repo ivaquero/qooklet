@@ -1,188 +1,191 @@
 # Qooklet
 
-A quick start template for scientific booklets.
+Qooklet is a Typst template for scientific notes and booklet-style documents. It
+provides chapter pages, front matter, localized labels, equation and figure
+numbering, theorem environments, CSV tables, and styled code blocks with a small
+set of configurable TOML files.
 
 ## Features
 
-### Modularization
+- Note mode and booklet mode:
+  - note mode is the default and is useful for single chapters or lecture notes;
+  - booklet mode is activated after `cover()` is called and enables book-like
+    front matter, part pages, chapter pages, and appendix pages.
+- Book structure helpers:
+  - `cover()`, `epigraph()`, `preface()`, `contents()`, and `part-page()`;
+  - `chapter-style()` for normal chapters;
+  - `appendix-style()` for appendices.
+- Automatic numbering:
+  - equations are numbered by chapter or appendix;
+  - figures and tables use localized supplements;
+  - references are formatted through the template style.
+- Scientific writing utilities:
+  - theorem-like environments from
+    [theorion](https://github.com/OrangeX4/typst-theorion);
+  - running headers through
+    [hydra](https://github.com/tingerrr/hydra);
+  - styled raw code blocks through
+    [codly](https://github.com/Dherse/codly).
+- Configurable labels, fonts, page sizes, spacing, and language through TOML.
 
-- Mode Switch
-  - the default mode is note mode
-  - when `cover()` is called the booklet mode will be activated
-- Styles
-  - call `cover()`, `epigraph()`, `preface()`, `contents()` and `part-page()` to generate corresponding page
-  - call `chapter-style()` and `appendix-style()` to change to customized layout
+## Installation
 
-### Automation
-
-- Math Equation
-  - auto numbering based on chapter
-  - link quote to source
-- Figure
-  - auto numbering based on chapter
-- Table
-  - read as three-line table
-- Code Block
-  - stylized by (using [codly](https://github.com/Dherse/codly))
-  - read code block
-
-### Useful Functions
-
-#### Tables
-
-- `tableq(data, k, stroke: table-three-line(rgb("000")), inset: 0.3em)`: reading .csv, where `k` is the number of columns, and for stroke, `qooklet` provide 2 predefined styles
-  - `table-three-line(stroke-color)`: default style, for three-line table
-  - `table-no-left-right(stroke-color)`: for grid without left border and right border
+### From Typst Universe
 
 ```typst
-#let data = csv("data.csv")
-#figure(
-  tableq(data, 5),
-  // stroke: table-three-line(rgb("000")),
-  // caption: ""
-  // supplement: "",
-  kind: table,
-)
+#import "@preview/qooklet:0.6.2": *
 ```
 
-#### Codes
+### From a Local Checkout
 
-- `code(text, lang: "python", breakable: true, width: 100%)`: read stylized code blocks
+Clone this repository into Typst's local package directory:
+
+- Linux:
+  - `$XDG_DATA_HOME/typst/packages/local`
+  - `~/.local/share/typst/packages/local`
+- macOS: `~/Library/Application Support/typst/packages/local`
+- Windows: `%APPDATA%/typst/packages/local`
+
+Then import the local package:
 
 ```typst
-#let compose = read("docker-compose.yml")
-#code(compose, lang: "yaml")
+#import "@local/qooklet:0.1.0": *
 ```
 
-### Environments
+The local package keeps the version at `0.1.0` for development convenience.
 
-- Theorem
-  - theorems enviroment is implemented by using [theorion](https://github.com/OrangeX4/typst-theorion) (the counters still needs tweaking in the booklet mode)
-- Shorthands
-  - scientific shorthands are provided by [physica](https://github.com/Leedehai/typst-physics)
-
-## Get Started
-
-Import `qooklet` from the `@preview` namespace.
+## Quick Start
 
 ### Note Mode
 
+Use note mode when you only need a chapter-style document without cover pages or
+front matter.
+
 ```typst
 #import "@preview/qooklet:0.6.2": *
+
+#let info = toml("config/info.toml").example
+
 #show: chapter-style.with(
-  title: "Chapter Title",
-  // the following are optional arguments
-  // title: "",
-  // info: default-info,
-  // styles: default-styles,
-  // names: default-names,
-  // outline-on: false,
+  title: "Bellman Equation",
+  info: info,
 )
+
+= Bellman Equation
+
+Your content starts here.
 ```
 
-where `info` is an argument that let you customize the information of your booklet using a toml file (if you leave it alone, the following info will be empty).
-
-You can read you info file by the following sentence
-
-```typst
-#let info = toml("your path").key-you-like
-```
-
-The toml file should look like this
-
-```toml
-[key-you-like]
-    title = "Your Booklet Name"
-    author = "Your Name"
-    footer = "Some Info You Want to Show"
-    header = "Some Info You Want to Show"
-    lang = "en" # or "zh"
-```
-
-![example](https://raw.githubusercontent.com/ivaquero/typst-qooklet/refs/heads/main/example.png)
+![Note mode example](https://raw.githubusercontent.com/ivaquero/typst-qooklet/refs/heads/main/example.png)
 
 ### Booklet Mode
 
-The booklet mode will be activated after calling `cover()`
+Calling `cover()` switches the document to booklet mode.
 
 ```typst
 #import "@preview/qooklet:0.6.2": *
 
-#let info = toml(your-info-file-path).key-you-like
-// for example: #let info = toml("config/info.toml").global
+#let info = toml("config/info.toml").example
 
-// add a cover
-#cover(
-  info,
-  date: datetime.today(),
-)
+#cover(info, date: datetime.today())
 
 #epigraph(info: info)[
-  // Add an epigraph to the document.
+  A short quote or motto.
 ]
 
 #preface(info: info)[
-  // Add a preface to the document.
+  Preface content.
 ]
 
-#contents
+#contents(depth: 2, info: info)
 
-// body
-#show: chapter-style.with(
-  title: "chapter-title 1",
-  info: info,
-)
+#part-page("Main Text", info: info)
 
 #show: chapter-style.with(
-  title: "chapter-title 2",
+  title: "First Chapter",
   info: info,
 )
-...
 
-// appendix
-#part-page(info: info)[Appendix]
+= First Section
 
-#show: appendix-style.with(
-  title: "Appendix-title 1",
-  info: info,
-)
+Chapter content.
+
+#part-page("Appendix", info: info)
 
 #show: appendix-style.with(
-  title: "Appendix-title 2",
+  title: "Supplementary Material",
   info: info,
 )
-...
+
+= Additional Notes
+
+Appendix content.
 ```
 
-![example-book](https://raw.githubusercontent.com/ivaquero/typst-qooklet/refs/heads/main/example-book.png)
+![Booklet mode example](https://raw.githubusercontent.com/ivaquero/typst-qooklet/refs/heads/main/example-book.png)
 
-## Tweaking the Params
+## Configuration
 
-### Names
+Most public functions accept `info`, `styles`, or `names` arguments. The default
+values are loaded from `0.1.0/config`.
 
-Qooklet's section names support English and Chinese by default. If you are not neither English speaker nor Chinese speaker, assume you are a French speaker, you can create a toml like
+### Document Info
+
+`info` controls metadata and language. It is commonly passed to `cover()`,
+`preface()`, `contents()`, `part-page()`, `chapter-style()`, and
+`appendix-style()`.
+
+```typst
+#let info = toml("config/info.toml").example
+```
+
+```toml
+[example]
+    title = "Your Booklet Name"
+    author = "Your Name"
+    footer = "Footer Text"
+    header = "Header Text"
+    lang = "en" # "en" or "zh" by default
+```
+
+### Localized Names
+
+Qooklet includes English and Chinese labels by default. Add another language by
+creating a compatible names table and passing it to the style functions.
 
 ```toml
 [sections.fr]
     preface = "Préface"
     chapter = "Chapitre"
-    content = "Table Des Matières"
+    content = "Table des matières"
+    appendix = "Annexe"
     bibliography = "Bibliographie"
 
 [blocks.fr]
     algorithm = "Algorithme"
     table = "Tableau"
     figure = "Figure"
-    equation = " Eq."
+    equation = " Eq. "
     rule = "Règle"
     law = "Loi"
 ```
 
-after reading this file by `toml()`, assign its value to the argument `names` in style functions, such as `chapter-style()`, `appendix-style()`.
+```typst
+#let info = toml("config/info.toml").example
+#let names = toml("config/names.toml")
 
-### Styles
+#show: chapter-style.with(
+  title: "Chapitre 1",
+  info: info,
+  names: names,
+)
+```
 
-If you are not satisfied with the default styles such as font-family, font-size, you can create a toml like
+Make sure `info.lang` matches a language key in `names` and `styles`.
+
+### Visual Styles
+
+`styles` controls page sizes, spacing, font sizes, and font families.
 
 ```toml
 [paper]
@@ -230,36 +233,87 @@ If you are not satisfied with the default styles such as font-family, font-size,
     math = "Times New Roman"
 ```
 
-after reading this file by `toml()`, assign its value to the argument `styles` in style functions, such as `chapter-style()`, `appendix-style()`.
-
-Don't forget to change the key `lang` in your info toml metioned above.
-
-For more details, see [examples.typ](https://github.com/ivaquero/typst-qooklet/blob/main/examples/example.pdf) and [examples-book.typ](https://github.com/ivaquero/typst-qooklet/blob/main/examples/example-book.pdf).
-
-## Clone the Repository
-
-Clone the [qooklet](https://github.com/ivaquero/typst-qooklet) repository to your `@local` workspace:
-
-- Linux：
-  - `$XDG_DATA_HOME/typst/packages/local`
-  - `~/.local/share/typst/packages/local`
-- macOS：`~/Library/Application\ Support/typst/packages/local`
-- Windows：`%APPDATA%/typst/packages/local`
-
-Import `qooklet` in the document
-
 ```typst
-#import "@local/qooklet:0.1.0": *
+#let styles = toml("config/styles.toml")
+
+#show: chapter-style.with(
+  title: "Custom Styled Chapter",
+  styles: styles,
+)
 ```
 
-> For developement convinience, local repo never changes the version
+## API Reference
+
+### Structure
+
+- `cover(info, date: datetime.today(), styles: default-styles)`: creates a cover
+  page and activates booklet mode.
+- `epigraph(info: default-info, styles: default-styles)[body]`: creates an
+  epigraph page.
+- `preface(info: default-info, styles: default-styles, names: default-names)[body]`:
+  creates a preface page.
+- `contents(depth: 2, info: default-info, styles: default-styles)`: creates a
+  table of contents. `depth` can be `1` or `2`.
+- `part-page(title, info: default-info, styles: default-styles)`: creates a part
+  divider page.
+
+### Styles
+
+- `chapter-style(title: "", info: default-info, styles: default-styles, names: default-names, outline-on: false, heading-depth: 3)[body]`:
+  applies chapter layout, headers, footers, heading styles, numbering, references,
+  and theorem styling.
+- `appendix-style(...)`: same as `chapter-style()`, but uses appendix numbering.
+- `front-matter-style(styles: default-styles)[body]`: styles front matter pages.
+- `cover-style(styles: default-styles)[body]`: applies cover/booklet page style.
+- `contents-style(depth: 2, lang: "en", names: default-names, styles: default-styles)[body]`:
+  lower-level table-of-contents style helper.
+
+### Tables
+
+`tableq(data, k, inset: 0.3em, stroke-color: rgb("000"))` renders flattened CSV
+data as a centered table using Qooklet's three-line style.
+
+```typst
+#let data = csv("data.csv")
+
+#figure(
+  tableq(data, 5, inset: 0.31em),
+  caption: "Dataset Summary",
+  supplement: "Table",
+  kind: table,
+)
+```
+
+Available stroke helpers:
+
+- `table-three-line(stroke-color)`: three-line table style.
+- `table-no-left-right(stroke-color)`: grid style without left and right borders.
+
+Use the stroke helpers directly with Typst's built-in `table` when you need more
+control than `tableq()` exposes.
+
+### Code Blocks
+
+`code(text, lang: "python", breakable: true, width: 100%)` renders a styled raw
+code block from a string.
+
+```typst
+#let compose = read("docker-compose.yml")
+#code(compose, lang: "yaml")
+```
+
+## Examples
+
+- [`examples/example.typ`](examples/example.typ): a compact note-mode example.
+- [`examples/example-book.typ`](examples/example-book.typ): a booklet-mode
+  tutorial and regression example.
 
 ## Credits
 
-Thanks @ParaN3xus for his [haobook](https://github.com/ParaN3xus/haobook) which offers much inspiration of the rewriting of this template.
+Qooklet is inspired by
+[haobook](https://github.com/ParaN3xus/haobook) by @ParaN3xus.
 
-Also thanks the creators of the following packages
-
-- @tingerrr: [hydra](https://github.com/tingerrr/hydra)
-- @Dherse: [codly](https://github.com/Dherse/codly)
-- @OrangeX4: [theorion](https://github.com/OrangeX4/typst-theorion)
+Thanks also to the creators of
+[hydra](https://github.com/tingerrr/hydra),
+[codly](https://github.com/Dherse/codly), and
+[theorion](https://github.com/OrangeX4/typst-theorion).

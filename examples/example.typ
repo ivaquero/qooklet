@@ -7,7 +7,7 @@
 
 = Bellman Equation
 
-#definition(title: "Bellman Eqation")[
+#definition(title: "Bellman Equation")[
 
   ...
 
@@ -21,7 +21,7 @@
   $ <bellman>
 ]
 
-= Bellman Optimal Eqation
+= Bellman Optimal Equation
 
 By @bellman,...
 

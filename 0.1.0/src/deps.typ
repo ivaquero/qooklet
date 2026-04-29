@@ -1,8 +1,6 @@
-// styles
 #import "@preview/hydra:0.6.2": hydra
 #import "@preview/codly:1.3.0": *
-// environments
-#import "@preview/theorion:0.5.0": *
+#import "@preview/theorion:0.6.0": *
 
 #let default-names = toml("../config/names.toml")
 #let default-styles = toml("../config/styles.toml")

@@ -11,14 +11,14 @@
 
   By `preface()`, you can add some information about the book.
 
-  This template is heavily based the template #link("https://github.com/ParaN3xus/haobook")[haobook]. The main difference is that `qooklet` does not provide side-note-like features which is provided by `haobook` using #link("https://github.com/nleanba/typst-marginalia")[]
+  This template is inspired by #link("https://github.com/ParaN3xus/haobook")[haobook]. The main difference is that `qooklet` does not provide side-note features like the ones that `haobook` builds with #link("https://github.com/nleanba/typst-marginalia")[marginalia].
 
-  This document serves both as a test document and a tutorial for the template. You can find the source code in the `example.typ` file. The template is designed to be user-friendly and customizable, allowing you to adapt it to your specific requirements.
+  This document serves both as a test document and a tutorial for the template. You can find the source code in `examples/example-book.typ`. The template is designed to be easy to customize for notes, short books, and scientific booklets.
 ]
 
-#contents(depth: 2)
+#contents(depth: 2, info: example)
 
-#part-page(info: example)[Specifications]
+#part-page("Specifications", info: example)
 
 #show: chapter-style.with(title: "Features", info: example)
 
@@ -26,7 +26,7 @@ In this chapter, I will show you the features of this template.
 
 = Builtin Styles
 
-All of these functions are:
+The public structure helpers are:
 
 - Styles:
   - `chapter-style(title: title, info: info)[body]`: Style for body pages.
@@ -34,10 +34,10 @@ All of these functions are:
   - `front-matter-style(body)`: Style for front matter pages.
 - Pages:
   - `cover(info, date: datetime.today())`: Add a cover page to the document.
-  - `epigraph(info)[body]`: Add an epigraph to the document.
-  - `preface(info)[body]`: Add a preface to the document.
-  - `part-page(info)[body]`: Add a part page to the document.
-  - `contents(depth: depth)`: Add a table of contents to the document.
+  - `epigraph(info: info)[body]`: Add an epigraph page to the document.
+  - `preface(info: info)[body]`: Add a preface page to the document.
+  - `part-page(title, info: info)`: Add a part divider page to the document.
+  - `contents(depth: depth, info: info)`: Add a table of contents to the document.
 
 = Two Modes
 
@@ -45,9 +45,9 @@ The default mode is note mode, when `cover()` is called the booklet mode will be
 
 = Tweakable Config
 
-The `info` argument in `chapter-style()` and `appendix-style()` is argument that let you customize the information of your booklet using a toml file (if you leave it alone, the following info will be empty).
+The `info` argument in `cover()`, `preface()`, `contents()`, `part-page()`, `chapter-style()`, and `appendix-style()` lets you customize document metadata through a TOML file. If you leave it unspecified, Qooklet uses the empty default metadata from `config/info.toml`.
 
-You can read you info file by the following sentence
+Read your info file like this:
 
 ```typst
 #let info = toml("your path").key-you-like
@@ -66,7 +66,7 @@ The toml file should look like this
 
 = Theorems
 
-The theorems enviroment is implemented by #link("https://github.com/OrangeX4/typst-theorion")[theorion].
+The theorem environment is implemented by #link("https://github.com/OrangeX4/typst-theorion")[theorion].
 
 #show: chapter-style.with(title: "Usage of the Template", info: example)
 
@@ -74,13 +74,13 @@ The template is designed to be easy to use. You can use it to create a booklet o
 
 = Importing the Template
 
-To use the template, you need to import like this
+To use the published template, import it from Typst Universe:
 
 ```typ
-#import "@preview/qooklet:0.5.0": *
+#import "@preview/qooklet:0.6.2": *
 ```
 
-or clone the repository to your `@local` workspace
+For local development, clone the repository to your `@local` workspace:
 
 - Linux：
   - `$XDG_DATA_HOME/typst/packages/local`
@@ -99,48 +99,45 @@ Overall, your document should be structured like this:
 ```typ
 #import "@local/qooklet:0.1.0": *
 
-#let info = toml(your-info-file-path).key-you-like
-// for example
-// #let info = toml("../config/info.toml").global
+#let info = toml("../0.1.0/config/info.toml").example
 
 // add a cover
-#cover(
-  // info,
-  // date: datetime.today(),
-)
+#cover(info, date: datetime.today())
 
-#epigraph[
+#epigraph(info: info)[
   // Add an epigraph to the document.
 ]
 
-#preface[
+#preface(info: info)[
   // Add a preface to the document.
 ]
 
-#contents
+#contents(depth: 2, info: info)
+
+#part-page("Main Text", info: info)
 
 // body
 #show: chapter-style.with(
-  title: "chapter-title 1",
+  title: "Chapter Title 1",
   info: info,
 )
 
 #show: chapter-style.with(
-  title: "chapter-title 2",
+  title: "Chapter Title 2",
   info: info,
 )
 ...
 
 // appendix
-#part-page[Appendix]
+#part-page("Appendix", info: info)
 
-#show: appendix-stylechapter-style.with(
-  title: "Appendix-title 1",
+#show: appendix-style.with(
+  title: "Appendix Title 1",
   info: info,
 )
 
-#show: appendix-stylechapter-style.with(
-  title: "Appendix-title 2",
+#show: appendix-style.with(
+  title: "Appendix Title 2",
   info: info,
 )
 ...
@@ -150,7 +147,7 @@ Overall, your document should be structured like this:
 
 = Bellman Equation
 
-#definition(title: "Bellman Eqation")[
+#definition(title: "Bellman Equation")[
 
   ...
 
@@ -163,7 +160,7 @@ Overall, your document should be structured like this:
   $ <bellman>
 ]
 
-= Bellman Optimal Eqation
+= Bellman Optimal Equation
 
 By Eq. @bellman,...
 
@@ -192,8 +189,8 @@ $ <boe>
   kind: table,
 )
 
-#part-page[Appendix]
+#part-page("Appendix", info: example)
 
-#show: appendix-style.with(title: "Bibliography")
+#show: appendix-style.with(title: "Bibliography", info: example)
 
 #bibliography("bib.bib", title: none)
