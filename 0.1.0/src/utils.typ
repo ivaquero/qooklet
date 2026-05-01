@@ -1,3 +1,17 @@
+#import "deps.typ": *
+
+#let ctext(
+  label,
+  size: .8em,
+  font: default-styles.fonts.at("zh").math,
+  ..options,
+) = text(
+  label,
+  size: size,
+  font: font,
+  ..options,
+)
+
 #let table-three-line(stroke-color) = {
   (x, y) => (
     top: if y < 2 {
