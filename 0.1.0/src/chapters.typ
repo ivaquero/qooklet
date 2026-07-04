@@ -174,7 +174,7 @@
     },
   )
 
-  align(center, chapter-title(title, lang: lang, prefix: prefix))
+  align(center, chapter-title(title, lang: lang, styles: styles, prefix: prefix))
 
   show heading: heading-size-style.with(lang: lang, styles: styles)
   set heading(numbering: (..numbers) => heading-numbering(
