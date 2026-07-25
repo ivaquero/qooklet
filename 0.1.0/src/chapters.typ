@@ -101,9 +101,19 @@
   styles: default-styles,
 ) = {
   let apply-heading-sizes = range(1, 5).fold(it => it, (style-it, level) => it => {
-    show heading.where(level: level): set text(
-      size: styles.sizes.at("heading-" + str(level)) * 1pt,
-    )
+    show heading.where(level: level): it => {
+      set text(
+        size: styles.sizes.at("heading-" + str(level)) * 1pt,
+        weight: if level <= 3 { "bold" } else { "regular" },
+      )
+      if lang == "zh" {
+        show latin-coverage: set text(
+          font: latin-font-for(styles, "context"),
+          weight: if level <= 3 { "bold" } else { "regular" },
+        )
+      }
+      it
+    }
     style-it(it)
   })
   apply-heading-sizes(x)
@@ -118,7 +128,8 @@
   let is-book = book-state.get()
   let the-prefix = if is-book { prefixed-counter(prefix, "1.", "A.") } else { "" }
   let level = numbers.pos().len()
-  if level <= 2 or (level == 3 and not is-book and heading-depth == 3) {
+  let max-depth = if is-book and heading-depth > 2 { 2 } else { heading-depth }
+  if level <= max-depth {
     the-prefix + numbering("1.", ..numbers)
   } else {
     h(-0.33em)
@@ -153,6 +164,10 @@
     heading-depth in (1, 2, 3),
     message: "depth can only be either 1, 2 or 3",
   )
+  assert(
+    prefix in ("chapter", "appendix"),
+    message: "prefix can only be either \"chapter\" or \"appendix\"",
+  )
 
   let header = info.header
   let footer = info.footer
@@ -176,13 +191,7 @@
     ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
-  show: it => if lang == "zh" {
-    show latin-coverage: set text(
-      font: latin-font-for(styles, "context"),
-      weight: "regular",
-    )
-    it
-  } else { it }
+  show: zh-latin-style.with(styles: styles, lang: lang, role: "context")
 
   set page(
     header: context {
@@ -232,7 +241,7 @@
   }
 
   show ref: ref-style.with(lang: lang, names: names).with(prefix: prefix)
-  show figure: figure-supplement-style
+  show figure: figure-supplement-style.with(lang: lang, names: names)
   show figure.where(kind: table): set figure.caption(position: top)
   show raw.where(block: true): code-block-style
 

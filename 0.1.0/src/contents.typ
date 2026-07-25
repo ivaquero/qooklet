@@ -12,13 +12,7 @@
 
   show: book-style.with(styles: styles)
   show link: set text(black)
-  show: it => if lang == "zh" {
-    show latin-coverage: set text(
-      font: latin-font-for(styles, "contents"),
-      weight: "regular",
-    )
-    it
-  } else { it }
+  show: zh-latin-style.with(styles: styles, lang: lang, role: "contents")
   show heading.where(level: 1): it => {
     set text(
       size: styles.sizes.contents * 1pt,
@@ -48,7 +42,6 @@
     if (depth >= 1) and (x.element.func() == figure) {
       let entry-body = smallcaps(x.body())
       let chap-prefix = str(chapter-index) + "." + h(0.5em)
-      let append-prefix = "ABCD".at(append-index - 1) + "." + h(0.5em)
 
       let kind = x.element.kind
       if kind == "part" {
@@ -56,6 +49,7 @@
       } else if kind == "chapter" {
         link(loc, chap-prefix + bold-entry(entry-body))
       } else if kind == "appendix" {
+        let append-prefix = appendix-number(append-index) + "." + h(0.5em)
         link(loc, append-prefix + bold-entry(entry-body))
       }
     } else if (
@@ -66,7 +60,7 @@
         (
           if prefix.has("children") {
             (
-              h(styles.fonts.at(lang).contents-indent * 1em)
+              h(styles.spaces.contents-indent * 1em)
                 + str(chapter-index)
                 + "."
                 + prefix.children.at(1)
@@ -110,6 +104,4 @@
     depth: depth,
   )
   pagebreak(to: "odd")
-
-  show outline: it => if query(it.target) == () {}
 }

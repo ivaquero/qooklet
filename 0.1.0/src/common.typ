@@ -1,4 +1,4 @@
-#import "deps.typ": default-info, default-names, default-styles, font-role-options, latin-coverage, latin-font-for, styled-text
+#import "deps.typ": default-info, default-names, default-styles, font-role-options, latin-coverage, latin-font-for, styled-text, zh-latin-style
 
 #let book-state = state("book-state", false)
 
@@ -9,6 +9,8 @@
 
 #let counter-chapter = counter(fig-chapter)
 #let counter-appendix = counter(fig-appendix)
+
+#let appendix-number(index) = str(numbering("A", index))
 
 #let book-style(body, styles: default-styles) = {
   show: it => context {

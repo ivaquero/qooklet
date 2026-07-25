@@ -1,11 +1,11 @@
 #import "deps.typ": *
-#import "common.typ": book-state, counter-appendix, counter-chapter
+#import "common.typ": appendix-number, book-state, counter-appendix, counter-chapter
 
-#let equation-prefix(prefix) = {
+#let equation-prefix-at(loc, prefix) = {
   if prefix == "chapter" {
-    counter-chapter.get().first()
+    counter-chapter.at(loc).first()
   } else if prefix == "appendix" {
-    "ABCDE".at(counter-appendix.get().first() - 1)
+    appendix-number(counter-appendix.at(loc).first())
   }
 }
 
@@ -16,12 +16,12 @@
       math.equation(
         block: true,
         numbering: if book-state.get() {
-          let title-index = equation-prefix(prefix)
+          let title-index = equation-prefix-at(loc, prefix)
           n => {
             "(" + str(title-index) + "." + str(n) + ")"
           }
         } else {
-          let h1 = counter(heading).get().first()
+          let h1 = counter(heading).at(loc).first()
           let num-style = if prefix == "chapter" {
             "(1.1)"
           } else if (
@@ -47,7 +47,7 @@
   if el.func() == math.equation {
     let eq-index = counter(math.equation).at(loc).first()
     if book-state.get() {
-      let title-index = equation-prefix(prefix)
+      let title-index = equation-prefix-at(loc, prefix)
       (
         names.blocks.at(lang).equation
           + link(loc, numbering(
@@ -71,7 +71,7 @@
   } else { x }
 }
 
-#let figure-supplement-style(x, names: default-names) = {
+#let figure-supplement-style(x, lang: "en", names: default-names) = {
   show figure.caption.where(kind: "chapter"): none
 
   show figure.caption.where(kind: figure): it => [

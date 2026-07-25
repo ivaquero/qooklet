@@ -186,6 +186,8 @@ Make sure `info.lang` matches a language key in `names` and `styles`.
 ### Visual Styles
 
 `styles` controls page sizes, spacing, font sizes, and font families.
+The default font platform is Windows. On macOS, compile with
+`--input qooklet-font-platform=macos` to prefer macOS system fonts.
 
 ```toml
 [paper]

@@ -40,19 +40,13 @@
     ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
-  show: it => if lang == "zh" {
-    show latin-coverage: set text(
-      font: latin-font-for(styles, "context"),
-      weight: "regular",
-    )
-    it
-  } else { it }
+  show: zh-latin-style.with(styles: styles, lang: lang, role: "context")
 
   v(2em)
   body
   v(2em)
 
-  align(right, emph(author))
+  align(right, emph(styled-text(author, styles: styles, lang: lang, role: "author")))
   pagebreak(to: "odd")
 }
 
