@@ -2,19 +2,11 @@
 #import "common.typ": *
 #import "referable.typ": *
 
-#let blank-page-state = state("qooklet-blank-pages", ())
-
 #let prefixed-counter(prefix, chapter-format, appendix-format) = {
   if prefix == "chapter" {
     counter-chapter.display(chapter-format)
   } else if prefix == "appendix" {
     counter-appendix.display(appendix-format)
-  }
-}
-
-#let page-chrome(body) = context {
-  if not blank-page-state.final().contains(here().page()) {
-    body()
   }
 }
 
@@ -75,12 +67,13 @@
 #let chapter-odd-pagebreak(.._ignored) = {
   context if calc.odd(here().page()) {
     pagebreak(weak: true)
-    context {
-      let blank-page = here().page()
-      blank-page-state.update(pages => pages + (blank-page,))
+    {
+      set page(header: none, footer: none)
+      pagebreak(weak: true, to: "odd")
     }
+  } else {
+    pagebreak(weak: true, to: "odd")
   }
-  pagebreak(weak: true, to: "odd")
 }
 
 #let chapter-img(img, title: "") = {
@@ -176,18 +169,18 @@
   )
 
   set page(
-    header: page-chrome(() => {
+    header: context {
       if not page-has-first-level-one-heading() {
         set text(size: styles.sizes.header * 1pt)
         align-odd-even(header, emph(hydra(1)))
         line(length: 100%)
       }
-    }),
-    footer: page-chrome(() => {
+    },
+    footer: context {
       set text(size: styles.sizes.footer * 1pt)
       let page_num = here().page()
       align-odd-even(footer, page_num)
-    }),
+    },
   )
 
   align(center, chapter-title(
