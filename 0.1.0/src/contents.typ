@@ -15,7 +15,7 @@
   show heading.where(level: 1): it => {
     set text(
       size: styles.sizes.contents * 1pt,
-      font: styles.fonts.at(lang).contents,
+      ..font-role-options(styles, lang, "contents"),
     )
     it
     v(.5em)
@@ -73,7 +73,7 @@
       )
     }
   }
-  text(body, font: styles.fonts.at(lang).contents)
+  styled-text(body, styles: styles, lang: lang, role: "contents")
 }
 
 #let contents(

@@ -3,9 +3,9 @@
 #let ctext(
   label,
   size: .8em,
-  font: default-styles.fonts.at("zh").math,
+  font: font-for(default-styles, "zh", "math"),
   ..options,
-) = text(
+) = styled-text(
   label,
   size: size,
   font: font,

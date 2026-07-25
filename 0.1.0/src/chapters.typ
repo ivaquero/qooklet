@@ -26,10 +26,12 @@
   styles: default-styles,
   chapter-break: () => pagebreak(weak: true, to: "odd"),
 ) = {
-  let the-title = text(
+  let the-title = styled-text(
     title,
     size: styles.sizes.chapter * 1pt,
-    font: styles.fonts.at(lang).chapter,
+    styles: styles,
+    lang: lang,
+    role: "chapter",
     style: "italic",
     weight: "bold",
   )
@@ -58,10 +60,12 @@
         bottom: bottom-pad,
       )),
       line(angle: 90deg, length: 100%),
-      pad(text(
+      pad(styled-text(
         chapter-idx,
         size: styles.sizes.chapter-index * 1pt,
-        font: styles.fonts.at(lang).chapter-index,
+        styles: styles,
+        lang: lang,
+        role: "chapter-index",
         weight: "bold",
       )),
     ))
@@ -169,7 +173,7 @@
 
   set text(
     size: styles.sizes.context * 1pt,
-    font: styles.fonts.at(lang).context,
+    ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
 

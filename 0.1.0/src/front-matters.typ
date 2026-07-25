@@ -21,10 +21,12 @@
   show: common-style
   show: front-matter-style
 
-  align(dir, heading(level: 1, text(
+  align(dir, heading(level: 1, styled-text(
     names.sections.at(lang).preface,
     size: styles.sizes.preface * 1pt,
-    font: styles.fonts.at(lang).preface,
+    styles: styles,
+    lang: lang,
+    role: "preface",
   )))
 
   show heading.where(level: 1): it => {
@@ -35,7 +37,7 @@
 
   set text(
     size: styles.sizes.context * 1pt,
-    font: styles.fonts.at(lang).context,
+    ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
 
@@ -59,10 +61,12 @@
   let lang = info.lang
 
   align(center + horizon, figure(
-    text(
+    styled-text(
       strong(title),
       size: styles.sizes.part * 1pt,
-      font: styles.fonts.at(lang).part,
+      styles: styles,
+      lang: lang,
+      role: "part",
     ),
     kind: "part",
     supplement: none,

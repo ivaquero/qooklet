@@ -18,23 +18,29 @@
   let author = info.author
 
   align(center + horizon, [
-    #text(
+    #styled-text(
       title,
       size: styles.sizes.cover * 1pt,
-      font: styles.fonts.at(lang).cover,
+      styles: styles,
+      lang: lang,
+      role: "cover",
       weight: "bold",
     )
     #v(1em)
-    #text(
+    #styled-text(
       author,
       size: styles.sizes.author * 1pt,
-      font: styles.fonts.at(lang).author,
+      styles: styles,
+      lang: lang,
+      role: "author",
     )
     #v(1em)
-    #text(
+    #styled-text(
       date.display(),
       size: styles.sizes.date * 1pt,
-      font: styles.fonts.at(lang).date,
+      styles: styles,
+      lang: lang,
+      role: "date",
     )
   ])
 }
@@ -47,10 +53,11 @@
   show: cover-style
 
   let lang = info.lang
-  align(center + horizon, text(
+  align(center + horizon, styled-text(
     body,
     size: styles.sizes.epigraph * 1pt,
-    font: styles.fonts.at(lang).epigraph,
+    styles: styles,
+    lang: lang,
+    role: "epigraph",
   ))
 }
-
