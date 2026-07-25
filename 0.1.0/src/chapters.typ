@@ -10,9 +10,13 @@
   }
 }
 
-#let page-has-first-level-one-heading() = {
-  let headings = query(heading.where(level: 1))
-  headings != () and headings.first().location().page() == here().page()
+#let page-has-book-first-heading() = {
+  book-state.get() and query(heading.where(level: 1))
+    .filter(h => (
+      h.location().page() == here().page()
+        and counter(heading).at(h.location()).first() == 1
+    ))
+    .len() > 0
 }
 
 #let chapter-title(
@@ -92,12 +96,13 @@
   lang: "en",
   styles: default-styles,
 ) = {
-  for level in range(1, 5) {
+  let apply-heading-sizes = range(1, 5).fold(it => it, (style-it, level) => it => {
     show heading.where(level: level): set text(
       size: styles.sizes.at("heading-" + str(level)) * 1pt,
     )
-  }
-  x
+    style-it(it)
+  })
+  apply-heading-sizes(x)
   v(1em, weak: true)
 }
 
@@ -170,7 +175,7 @@
 
   set page(
     header: context {
-      if not page-has-first-level-one-heading() {
+      if not page-has-book-first-heading() {
         set text(size: styles.sizes.header * 1pt)
         align-odd-even(header, emph(hydra(1)))
         line(length: 100%)
