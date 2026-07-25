@@ -2,20 +2,6 @@
 #import "common.typ": *
 #import "referable.typ": *
 
-#let align-odd-even(odd-left, odd-right, hide: false) = {
-  let chapter-page = query(selector(fig-chapter).or(fig-appendix))
-    .filter(h => h.location().page() == here().page())
-    .len()
-
-  if chapter-page != 1 or hide == false {
-    if calc.odd(here().page()) {
-      align(right, [#odd-left #h(6fr) #odd-right])
-    } else {
-      align(right, [#odd-right #h(6fr) #odd-left])
-    }
-  }
-}
-
 #let chapter-title(
   title,
   lang: "en",
@@ -120,6 +106,20 @@
     the-prefix + numbering("1.", ..numbers)
   } else {
     h(-0.33em)
+  }
+}
+
+#let align-odd-even(odd-left, odd-right, hide: false) = {
+  let chapter-page = query(selector(fig-chapter).or(fig-appendix))
+    .filter(h => h.location().page() == here().page())
+    .len()
+
+  if chapter-page != 1 or hide == false {
+    if calc.odd(here().page()) {
+      align(right, [#odd-left #h(6fr) #odd-right])
+    } else {
+      align(right, [#odd-right #h(6fr) #odd-left])
+    }
   }
 }
 
