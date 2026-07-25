@@ -11,7 +11,7 @@
   date: datetime.today(),
   styles: default-styles,
 ) = {
-  show: cover-style
+  show: cover-style.with(styles: styles)
 
   let title = info.title
   let lang = info.lang
@@ -34,14 +34,16 @@
       lang: lang,
       role: "author",
     )
-    #v(1em)
-    #styled-text(
-      date.display(),
-      size: styles.sizes.date * 1pt,
-      styles: styles,
-      lang: lang,
-      role: "date",
-    )
+    #if date != none {
+      v(1em)
+      styled-text(
+        date.display(),
+        size: styles.sizes.date * 1pt,
+        styles: styles,
+        lang: lang,
+        role: "date",
+      )
+    }
   ])
 }
 
@@ -50,7 +52,7 @@
   info: default-info,
   styles: default-styles,
 ) = {
-  show: cover-style
+  show: cover-style.with(styles: styles)
 
   let lang = info.lang
   align(center + horizon, styled-text(

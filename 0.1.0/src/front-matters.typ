@@ -19,7 +19,7 @@
   let dir = if lang == "zh" { center } else { left }
 
   show: common-style
-  show: front-matter-style
+  show: front-matter-style.with(styles: styles)
 
   align(dir, heading(level: 1, styled-text(
     names.sections.at(lang).preface,
@@ -55,8 +55,7 @@
   info: default-info,
   styles: default-styles,
 ) = {
-  show: front-matter-style
-  show: book-style.with(styles: styles)
+  show: front-matter-style.with(styles: styles)
   show figure.caption: none
 
   let lang = info.lang
