@@ -2,11 +2,14 @@
 #import "common.typ": *
 #import "referable.typ": *
 
+#let blank-page-state = state("qooklet-blank-pages", ())
+
 #let chapter-title(
   title,
   lang: "en",
   prefix: "chapter",
   styles: default-styles,
+  chapter-break: () => pagebreak(weak: true, to: "odd"),
 ) = {
   let the-title = text(
     title,
@@ -20,7 +23,7 @@
     the-title
     v(2em)
   } else {
-    pagebreak(weak: true, to: "odd")
+    chapter-break()
     show figure.caption: none
     let chapter-idx = context if (prefix == "chapter") {
       counter-chapter.display("1")
@@ -51,6 +54,19 @@
         weight: "bold",
       )),
     ))
+  }
+}
+
+#let chapter-odd-pagebreak(header, footer, styles) = {
+  context if calc.odd(here().page()) {
+    pagebreak(weak: true)
+    context {
+      let blank-page = here().page()
+      blank-page-state.update(pages => pages + (blank-page,))
+    }
+    pagebreak(weak: true, to: "odd")
+  } else {
+    pagebreak(weak: true, to: "odd")
   }
 }
 
@@ -163,18 +179,28 @@
 
   set page(
     header: context {
-      set text(size: styles.sizes.header * 1pt)
-      align-odd-even(header, emph(hydra(1)), hide: true)
-      line(length: 100%)
+      if not blank-page-state.final().contains(here().page()) {
+        set text(size: styles.sizes.header * 1pt)
+        align-odd-even(header, emph(hydra(1)))
+        line(length: 100%)
+      }
     },
     footer: context {
-      set text(size: styles.sizes.footer * 1pt)
-      let page_num = here().page()
-      align-odd-even(footer, page_num)
+      if not blank-page-state.final().contains(here().page()) {
+        set text(size: styles.sizes.footer * 1pt)
+        let page_num = here().page()
+        align-odd-even(footer, page_num)
+      }
     },
   )
 
-  align(center, chapter-title(title, lang: lang, styles: styles, prefix: prefix))
+  align(center, chapter-title(
+    title,
+    lang: lang,
+    styles: styles,
+    prefix: prefix,
+    chapter-break: () => chapter-odd-pagebreak(header, footer, styles),
+  ))
 
   show heading: heading-size-style.with(lang: lang, styles: styles)
   set heading(numbering: (..numbers) => heading-numbering(
