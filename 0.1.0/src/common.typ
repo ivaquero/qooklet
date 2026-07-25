@@ -1,4 +1,4 @@
-#import "deps.typ": default-info, default-names, default-styles, font-role-options, styled-text
+#import "deps.typ": default-info, default-names, default-styles, font-role-options, latin-coverage, latin-font-for, styled-text
 
 #let book-state = state("book-state", false)
 

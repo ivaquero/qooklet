@@ -40,6 +40,13 @@
     ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
+  show: it => if lang == "zh" {
+    show latin-coverage: set text(
+      font: latin-font-for(styles, "context"),
+      weight: "regular",
+    )
+    it
+  } else { it }
 
   v(2em)
   body
@@ -62,11 +69,12 @@
 
   align(center + horizon, figure(
     styled-text(
-      strong(title),
+      title,
       size: styles.sizes.part * 1pt,
       styles: styles,
       lang: lang,
       role: "part",
+      weight: "bold",
     ),
     kind: "part",
     supplement: none,

@@ -176,6 +176,13 @@
     ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
+  show: it => if lang == "zh" {
+    show latin-coverage: set text(
+      font: latin-font-for(styles, "context"),
+      weight: "regular",
+    )
+    it
+  } else { it }
 
   set page(
     header: context {
