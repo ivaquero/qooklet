@@ -4,6 +4,25 @@
 
 #let blank-page-state = state("qooklet-blank-pages", ())
 
+#let prefixed-counter(prefix, chapter-format, appendix-format) = {
+  if prefix == "chapter" {
+    counter-chapter.display(chapter-format)
+  } else if prefix == "appendix" {
+    counter-appendix.display(appendix-format)
+  }
+}
+
+#let page-chrome(body) = context {
+  if not blank-page-state.final().contains(here().page()) {
+    body()
+  }
+}
+
+#let page-has-first-level-one-heading() = {
+  let headings = query(heading.where(level: 1))
+  headings != () and headings.first().location().page() == here().page()
+}
+
 #let chapter-title(
   title,
   lang: "en",
@@ -25,11 +44,7 @@
   } else {
     chapter-break()
     show figure.caption: none
-    let chapter-idx = context if (prefix == "chapter") {
-      counter-chapter.display("1")
-    } else if (
-      prefix == "appendix"
-    ) { counter-appendix.display("A") }
+    let chapter-idx = context prefixed-counter(prefix, "1", "A")
 
     let bottom-pad = 10%
     block(height: 50%, grid(
@@ -57,17 +72,15 @@
   }
 }
 
-#let chapter-odd-pagebreak(header, footer, styles) = {
+#let chapter-odd-pagebreak(.._ignored) = {
   context if calc.odd(here().page()) {
     pagebreak(weak: true)
     context {
       let blank-page = here().page()
       blank-page-state.update(pages => pages + (blank-page,))
     }
-    pagebreak(weak: true, to: "odd")
-  } else {
-    pagebreak(weak: true, to: "odd")
   }
+  pagebreak(weak: true, to: "odd")
 }
 
 #let chapter-img(img, title: "") = {
@@ -86,18 +99,11 @@
   lang: "en",
   styles: default-styles,
 ) = {
-  show heading.where(level: 1): set text(
-    size: styles.sizes.heading-1 * 1pt,
-  )
-  show heading.where(level: 2): set text(
-    size: styles.sizes.heading-2 * 1pt,
-  )
-  show heading.where(level: 3): set text(
-    size: styles.sizes.heading-3 * 1pt,
-  )
-  show heading.where(level: 4): set text(
-    size: styles.sizes.heading-4 * 1pt,
-  )
+  for level in range(1, 5) {
+    show heading.where(level: level): set text(
+      size: styles.sizes.at("heading-" + str(level)) * 1pt,
+    )
+  }
   x
   v(1em, weak: true)
 }
@@ -107,18 +113,10 @@
   prefix: "chapter",
   heading-depth: 3,
 ) = {
-  let the-prefix = if book-state.get() {
-    if (prefix == "chapter") { counter-chapter.display("1.") } else if (
-      prefix == "appendix"
-    ) { counter-appendix.display("A.") }
-  }
-  let heading-depth2 = if book-state.get() { heading-depth - 1 } else {
-    heading-depth
-  }
+  let is-book = book-state.get()
+  let the-prefix = if is-book { prefixed-counter(prefix, "1.", "A.") } else { "" }
   let level = numbers.pos().len()
-  if (level == 1) or (level == 2) {
-    the-prefix + numbering("1.", ..numbers)
-  } else if (level == 3) and (heading-depth2 == 3) {
+  if level <= 2 or (level == 3 and not is-book and heading-depth == 3) {
     the-prefix + numbering("1.", ..numbers)
   } else {
     h(-0.33em)
@@ -130,7 +128,7 @@
     .filter(h => h.location().page() == here().page())
     .len()
 
-  if chapter-page != 1 or hide == false {
+  if not (hide and chapter-page == 1) {
     if calc.odd(here().page()) {
       align(right, [#odd-left #h(6fr) #odd-right])
     } else {
@@ -164,7 +162,7 @@
   set par(
     first-line-indent: (
       amount: styles.spaces.par-indent * 1em,
-      all: if lang == "zh" { true } else { false },
+      all: lang == "zh",
     ),
     justify: true,
     leading: styles.spaces.par-leading * 1em,
@@ -178,20 +176,18 @@
   )
 
   set page(
-    header: context {
-      if not blank-page-state.final().contains(here().page()) {
+    header: page-chrome(() => {
+      if not page-has-first-level-one-heading() {
         set text(size: styles.sizes.header * 1pt)
         align-odd-even(header, emph(hydra(1)))
         line(length: 100%)
       }
-    },
-    footer: context {
-      if not blank-page-state.final().contains(here().page()) {
-        set text(size: styles.sizes.footer * 1pt)
-        let page_num = here().page()
-        align-odd-even(footer, page_num)
-      }
-    },
+    }),
+    footer: page-chrome(() => {
+      set text(size: styles.sizes.footer * 1pt)
+      let page_num = here().page()
+      align-odd-even(footer, page_num)
+    }),
   )
 
   align(center, chapter-title(
@@ -199,7 +195,7 @@
     lang: lang,
     styles: styles,
     prefix: prefix,
-    chapter-break: () => chapter-odd-pagebreak(header, footer, styles),
+    chapter-break: chapter-odd-pagebreak,
   ))
 
   show heading: heading-size-style.with(lang: lang, styles: styles)
@@ -214,7 +210,7 @@
     it
   }
 
-  if outline-on == true {
+  if outline-on {
     outline(depth: 2)
     pagebreak()
   }
