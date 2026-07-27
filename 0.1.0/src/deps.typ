@@ -28,7 +28,7 @@
   if font == "" { (:) } else { (font: font) }
 }
 
-#let styled-text(
+#let cjk-latin-style(
   body,
   font: "",
   styles: default-styles,

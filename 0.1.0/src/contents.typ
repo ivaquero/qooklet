@@ -12,7 +12,7 @@
 
   show: book-style.with(styles: styles)
   show link: set text(black)
-  show: styled-text.with(styles: styles, lang: lang, role: "contents", as-style: true)
+  show: cjk-latin-style.with(styles: styles, lang: lang, role: "contents", as-style: true)
   show heading.where(level: 1): it => {
     set text(
       size: styles.sizes.contents * 1pt,
@@ -72,19 +72,14 @@
             )
           } else if prefix.has("text") {
             (
-              prefix
-                + h(.5em)
-                + x.body()
-                + fill
-                + x.page()
-                + v(0em)
+              prefix + h(.5em) + x.body() + fill + x.page() + v(0em)
             )
           }
         ),
       )
     }
   }
-  styled-text(body, styles: styles, lang: lang, role: "contents")
+  cjk-latin-style(body, styles: styles, lang: lang, role: "contents")
 }
 
 #let contents(

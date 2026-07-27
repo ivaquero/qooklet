@@ -4,7 +4,7 @@
   label,
   size: .8em,
   ..options,
-) = styled-text(
+) = cjk-latin-style(
   label,
   size: size,
   styles: default-styles,

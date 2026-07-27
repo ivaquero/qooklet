@@ -29,7 +29,7 @@
   styles: default-styles,
   chapter-break: () => pagebreak(weak: true, to: "odd"),
 ) = {
-  let the-title = styled-text(
+  let the-title = cjk-latin-style(
     title,
     size: styles.sizes.chapter * 1pt,
     styles: styles,
@@ -67,7 +67,7 @@
         bottom: bottom-pad,
       )),
       line(angle: 90deg, length: 100%),
-      pad(styled-text(
+      pad(cjk-latin-style(
         chapter-idx,
         size: styles.sizes.chapter-index * 1pt,
         styles: styles,
@@ -116,7 +116,7 @@
           weight: if level <= 3 { "bold" } else { "regular" },
         )
         if lang == "zh" {
-          show: styled-text.with(
+          show: cjk-latin-style.with(
             styles: styles,
             lang: lang,
             role: "context",
@@ -149,17 +149,11 @@
   }
 }
 
-#let align-odd-even(odd-left, odd-right, hide: false) = {
-  let chapter-page = query(selector(fig-chapter).or(fig-appendix))
-    .filter(h => h.location().page() == here().page())
-    .len()
-
-  if not (hide and chapter-page == 1) {
-    if calc.odd(here().page()) {
-      align(right, [#odd-left #h(6fr) #odd-right])
-    } else {
-      align(right, [#odd-right #h(6fr) #odd-left])
-    }
+#let align-odd-even(odd-left, odd-right) = {
+  if calc.odd(here().page()) {
+    align(right, [#odd-left #h(6fr) #odd-right])
+  } else {
+    align(right, [#odd-right #h(6fr) #odd-left])
   }
 }
 
@@ -204,7 +198,7 @@
     ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
-  show: styled-text.with(styles: styles, lang: lang, role: "context", as-style: true)
+  show: cjk-latin-style.with(styles: styles, lang: lang, role: "context", as-style: true)
 
   set page(
     header: context {
@@ -221,6 +215,11 @@
     },
   )
 
+  show pagebreak.where(weak: true): it => {
+    counter(heading).update(0)
+    it
+  }
+
   align(center, chapter-title(
     title,
     lang: lang,
@@ -235,11 +234,6 @@
     prefix: prefix,
     heading-depth: heading-depth,
   ))
-
-  show pagebreak.where(weak: true): it => {
-    counter(heading).update(0)
-    it
-  }
 
   if outline-on {
     outline(depth: 2)
@@ -272,3 +266,5 @@
 }
 
 #let appendix-style = chapter-style.with(prefix: "appendix")
+#let chapter = chapter-style
+#let appendix = appendix-style

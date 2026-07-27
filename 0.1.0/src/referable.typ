@@ -9,6 +9,21 @@
   }
 }
 
+#let heading-numbering-at(loc) = {
+  let nums = counter(heading).at(loc)
+  if book-state.get() {
+    let append-index = counter-appendix.at(loc).first()
+    let title-index = if append-index > 0 {
+      appendix-number(append-index)
+    } else {
+      str(counter-chapter.at(loc).first())
+    }
+    title-index + "." + numbering("1.", ..nums)
+  } else {
+    numbering("1.", ..nums)
+  }
+}
+
 #let equation-numbering-style(x, prefix: "chapter") = {
   show math.equation: it => {
     if it.has("label") {
@@ -41,7 +56,14 @@
 }
 
 #let ref-style(x, lang: "en", names: default-names, prefix: "chapter") = {
-  let el = x.element
+  let targets = query(selector(x.target))
+  let el = if targets.len() > 0 {
+    targets.first()
+  } else if x.has("element") {
+    x.element
+  } else {
+    none
+  }
   if el == none { return x }
   let loc = el.location()
   if el.func() == math.equation {
@@ -68,7 +90,13 @@
         names.blocks.at(lang).equation + link(loc, numbering(num-style, h1, eq-index + 1))
       )
     }
-  } else { x }
+  } else if el.func() == heading {
+    link(loc, el.supplement + [ ] + heading-numbering-at(loc))
+  } else if el.func() == figure {
+    link(loc, el.supplement + [ ] + context el.counter.display(el.numbering))
+  } else {
+    link(loc, str(x.target))
+  }
 }
 
 #let figure-supplement-style(x, lang: "en", names: default-names) = {

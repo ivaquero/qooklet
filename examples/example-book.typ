@@ -20,7 +20,7 @@
 
 #part-page("Specifications", info: example)
 
-#show: chapter-style.with(title: "Features", info: example)
+#chapter(title: "Features", info: example)[
 
 In this chapter, I will show you the features of this template.
 
@@ -29,8 +29,8 @@ In this chapter, I will show you the features of this template.
 The public structure helpers are:
 
 - Styles:
-  - `chapter-style(title: title, info: info)[body]`: Style for body pages.
-  - `appendix-style(title: title, info: info)[body]`: Style for appendix pages.
+  - `chapter(title: title, info: info)[body]`: Add a styled chapter.
+  - `appendix(title: title, info: info)[body]`: Add a styled appendix.
   - `front-matter-style(body)`: Style for front matter pages.
 - Pages:
   - `cover(info, date: datetime.today())`: Add a cover page to the document.
@@ -45,7 +45,7 @@ The default mode is note mode, when `cover()` is called the booklet mode will be
 
 = Tweakable Config
 
-The `info` argument in `cover()`, `preface()`, `contents()`, `part-page()`, `chapter-style()`, and `appendix-style()` lets you customize document metadata through a TOML file. If you leave it unspecified, Qooklet uses the empty default metadata from `config/info.toml`.
+The `info` argument in `cover()`, `preface()`, `contents()`, `part-page()`, `chapter()`, and `appendix()` lets you customize document metadata through a TOML file. If you leave it unspecified, Qooklet uses the empty default metadata from `config/info.toml`.
 
 Read your info file like this:
 
@@ -67,8 +67,9 @@ The toml file should look like this
 = Theorems
 
 The theorem environment is implemented by #link("https://github.com/OrangeX4/typst-theorion")[theorion].
+]
 
-#show: chapter-style.with(title: "Usage of the Template", info: example)
+#chapter(title: "Usage of the Template", info: example)[
 
 The template is designed to be easy to use. You can use it to create a booklet or a note with a beautiful layout.
 
@@ -117,33 +118,40 @@ Overall, your document should be structured like this:
 #part-page("Main Text", info: info)
 
 // body
-#show: chapter-style.with(
+#chapter(
   title: "Chapter Title 1",
   info: info,
-)
+)[
+  ...
+]
 
-#show: chapter-style.with(
+#chapter(
   title: "Chapter Title 2",
   info: info,
-)
-...
+)[
+  ...
+]
 
 // appendix
 #part-page("Appendix", info: info)
 
-#show: appendix-style.with(
+#appendix(
   title: "Appendix Title 1",
   info: info,
-)
+)[
+  ...
+]
 
-#show: appendix-style.with(
+#appendix(
   title: "Appendix Title 2",
   info: info,
-)
-...
+)[
+  ...
+]
 ```
+]
 
-#show: chapter-style.with(title: "Some Examples", info: example)
+#chapter(title: "Some Examples", info: example)[
 
 = Bellman Equation
 
@@ -188,9 +196,11 @@ $ <boe>
   supplement: "Table",
   kind: table,
 )
+]
 
 #part-page("Appendix", info: example)
 
-#show: appendix-style.with(title: "Bibliography", info: example)
+#appendix(title: "Bibliography", info: example)[
 
 #bibliography("bib.bib", title: none)
+]

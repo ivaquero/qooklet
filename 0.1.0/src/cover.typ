@@ -18,7 +18,7 @@
   let author = info.author
 
   align(center + horizon, [
-    #styled-text(
+    #cjk-latin-style(
       title,
       size: styles.sizes.cover * 1pt,
       styles: styles,
@@ -27,7 +27,7 @@
       weight: "bold",
     )
     #v(1em)
-    #styled-text(
+    #cjk-latin-style(
       author,
       size: styles.sizes.author * 1pt,
       styles: styles,
@@ -36,7 +36,7 @@
     )
     #if date != none {
       v(1em)
-      styled-text(
+      cjk-latin-style(
         date.display(),
         size: styles.sizes.date * 1pt,
         styles: styles,
@@ -55,7 +55,7 @@
   show: cover-style.with(styles: styles)
 
   let lang = info.lang
-  align(center + horizon, styled-text(
+  align(center + horizon, cjk-latin-style(
     body,
     size: styles.sizes.epigraph * 1pt,
     styles: styles,

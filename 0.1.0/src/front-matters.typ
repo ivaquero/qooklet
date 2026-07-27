@@ -21,7 +21,7 @@
   show: common-style
   show: front-matter-style.with(styles: styles)
 
-  align(dir, heading(level: 1, styled-text(
+  align(dir, heading(level: 1, cjk-latin-style(
     names.sections.at(lang).preface,
     size: styles.sizes.preface * 1pt,
     styles: styles,
@@ -40,13 +40,13 @@
     ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
-  show: styled-text.with(styles: styles, lang: lang, role: "context", as-style: true)
+  show: cjk-latin-style.with(styles: styles, lang: lang, role: "context", as-style: true)
 
   v(2em)
   body
   v(2em)
 
-  align(right, emph(styled-text(author, styles: styles, lang: lang, role: "author")))
+  align(right, emph(cjk-latin-style(author, styles: styles, lang: lang, role: "author")))
   pagebreak(to: "odd")
 }
 
@@ -61,7 +61,7 @@
   let lang = info.lang
 
   align(center + horizon, figure(
-    styled-text(
+    cjk-latin-style(
       title,
       size: styles.sizes.part * 1pt,
       styles: styles,

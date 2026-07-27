@@ -13,8 +13,8 @@ set of configurable TOML files.
     front matter, part pages, chapter pages, and appendix pages.
 - Book structure helpers:
   - `cover()`, `epigraph()`, `preface()`, `contents()`, and `part-page()`;
-  - `chapter-style()` for normal chapters;
-  - `appendix-style()` for appendices.
+  - `chapter()` for normal chapters;
+  - `appendix()` for appendices.
 - Automatic numbering:
   - equations are numbered by chapter or appendix;
   - figures and tables use localized supplements;
@@ -66,14 +66,15 @@ front matter.
 
 #let info = toml("config/info.toml").example
 
-#show: chapter-style.with(
+#chapter(
   title: "Bellman Equation",
   info: info,
-)
+)[
 
 = Bellman Equation
 
 Your content starts here.
+]
 ```
 
 ![Note mode example](https://raw.githubusercontent.com/ivaquero/typst-qooklet/refs/heads/main/example.png)
@@ -101,25 +102,27 @@ Calling `cover()` switches the document to booklet mode.
 
 #part-page("Main Text", info: info)
 
-#show: chapter-style.with(
+#chapter(
   title: "First Chapter",
   info: info,
-)
+)[
 
 = First Section
 
 Chapter content.
+]
 
 #part-page("Appendix", info: info)
 
-#show: appendix-style.with(
+#appendix(
   title: "Supplementary Material",
   info: info,
-)
+)[
 
 = Additional Notes
 
 Appendix content.
+]
 ```
 
 ![Booklet mode example](https://raw.githubusercontent.com/ivaquero/typst-qooklet/refs/heads/main/example-book.png)
@@ -132,8 +135,7 @@ values are loaded from `0.1.0/config`.
 ### Document Info
 
 `info` controls metadata and language. It is commonly passed to `cover()`,
-`preface()`, `contents()`, `part-page()`, `chapter-style()`, and
-`appendix-style()`.
+`preface()`, `contents()`, `part-page()`, `chapter()`, and `appendix()`.
 
 ```typst
 #let info = toml("config/info.toml").example
@@ -174,11 +176,13 @@ creating a compatible names table and passing it to the style functions.
 #let info = toml("config/info.toml").example
 #let names = toml("config/names.toml")
 
-#show: chapter-style.with(
+#chapter(
   title: "Chapitre 1",
   info: info,
   names: names,
-)
+)[
+  ...
+]
 ```
 
 Make sure `info.lang` matches a language key in `names` and `styles`.
@@ -238,10 +242,12 @@ The default font platform is Windows. On macOS, compile with
 ```typst
 #let styles = toml("config/styles.toml")
 
-#show: chapter-style.with(
+#chapter(
   title: "Custom Styled Chapter",
   styles: styles,
-)
+)[
+  ...
+]
 ```
 
 ## API Reference
@@ -261,10 +267,11 @@ The default font platform is Windows. On macOS, compile with
 
 ### Styles
 
-- `chapter-style(title: "", info: default-info, styles: default-styles, names: default-names, outline-on: false, heading-depth: 3)[body]`:
+- `chapter(title: "", info: default-info, styles: default-styles, names: default-names, outline-on: false, heading-depth: 3)[body]`:
   applies chapter layout, headers, footers, heading styles, numbering, references,
   and theorem styling.
-- `appendix-style(...)`: same as `chapter-style()`, but uses appendix numbering.
+- `appendix(...)`: same as `chapter()`, but uses appendix numbering.
+- `chapter-style(...)` and `appendix-style(...)`: lower-level compatibility helpers.
 - `front-matter-style(styles: default-styles)[body]`: styles front matter pages.
 - `cover-style(styles: default-styles)[body]`: applies cover/booklet page style.
 - `contents-style(depth: 2, lang: "en", names: default-names, styles: default-styles)[body]`:
