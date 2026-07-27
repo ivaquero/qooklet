@@ -182,7 +182,8 @@
   outline-on: false,
   prefix: "chapter",
   heading-depth: 3,
-  format-refs: true,
+  format-refs: false,
+  full-style: false,
 ) = {
   assert(
     heading-depth in (1, 2, 3),
@@ -245,49 +246,55 @@
     chapter-break: chapter-odd-pagebreak,
   ))
 
-  show heading: heading-size-style.with(lang: lang, styles: styles)
+  set math.cases(gap: .85em)
+  set math.equation(numbering: equation-numbering(prefix: prefix))
   set heading(numbering: (..numbers) => heading-numbering(
     ..numbers,
     prefix: prefix,
     heading-depth: heading-depth,
   ))
 
-  if outline-on {
-    outline(depth: 2)
-    pagebreak()
-  }
+  if full-style {
+    show heading: heading-size-style.with(lang: lang, styles: styles)
 
-  set math.cases(gap: .85em)
-  show math.equation: equation-numbering-style.with(prefix: prefix)
-  show heading.where(level: 1): it => {
-    counter(math.equation).update(0)
-    it
-  }
+    if outline-on {
+      outline(depth: 2)
+      pagebreak()
+    }
 
-  show figure: figure-supplement-style.with(lang: lang, names: names)
-  show figure.where(kind: table): set figure.caption(position: top)
-  show raw.where(block: true): code-block-style
+    show math.equation: equation-numbering-style.with(prefix: prefix)
+    show heading.where(level: 1): it => {
+      counter(math.equation).update(0)
+      it
+    }
 
-  context if book-state.get() {
-    set-inherited-levels(0)
+    show figure: figure-supplement-style.with(lang: lang, names: names)
+    show figure.where(kind: table): set figure.caption(position: top)
+    show raw.where(block: true): code-block-style
+
+    context if book-state.get() {
+      set-inherited-levels(0)
+    } else {
+      set-inherited-levels(1)
+    }
+
+    if prefix == "appendix" {
+      set-theorion-numbering("A.1")
+    }
+    show: show-theorion
+
+    with-ref-style(
+      body,
+      enabled: format-refs,
+      lang: lang,
+      names: names,
+      prefix: prefix,
+    )
   } else {
-    set-inherited-levels(1)
+    body
   }
-
-  if prefix == "appendix" {
-    set-theorion-numbering("A.1")
-  }
-  show: show-theorion
-
-  with-ref-style(
-    body,
-    enabled: format-refs,
-    lang: lang,
-    names: names,
-    prefix: prefix,
-  )
 }
 
 #let appendix-style = chapter-style.with(prefix: "appendix")
-#let chapter = chapter-style
-#let appendix = appendix-style
+#let chapter = chapter-style.with(full-style: true, format-refs: true)
+#let appendix = appendix-style.with(full-style: true, format-refs: true)

@@ -64,7 +64,13 @@ front matter.
 ```typst
 #import "@preview/qooklet:0.6.2": *
 
-#let info = toml("config/info.toml").example
+#let info = (
+  title: "Qooklet Note",
+  author: "Your Name",
+  footer: "Qooklet Note",
+  header: "",
+  lang: "en",
+)
 
 #chapter(
   title: "Bellman Equation",
@@ -86,7 +92,13 @@ Calling `cover()` switches the document to booklet mode.
 ```typst
 #import "@preview/qooklet:0.6.2": *
 
-#let info = toml("config/info.toml").example
+#let info = (
+  title: "Qooklet Booklet",
+  author: "Your Name",
+  footer: "Qooklet Booklet",
+  header: "",
+  lang: "en",
+)
 
 #cover(info, date: datetime.today())
 
@@ -295,9 +307,9 @@ See `0.1.0/src/config/styles.toml` for all available roles.
   and theorem styling.
 - `appendix(...)`: same as `chapter()`, but uses appendix numbering.
 - `chapter-style(...)` and `appendix-style(...)`: compatibility helpers for older
-  documents. Prefer `chapter()` and `appendix()` for new multi-chapter documents.
-  Repeated `#show: chapter-style.with(...)` rules can stack and recurse when many
-  later references are present.
+  documents. They use a safer, limited style path for repeated `#show` rules.
+  Prefer `chapter()` and `appendix()` for full styling in new multi-chapter
+  documents.
 - `front-matter-style(styles: default-styles)[body]`: styles front matter pages.
 - `cover-style(styles: default-styles)[body]`: applies cover/booklet page style.
 - `contents-style(depth: 1, lang: "en", names: default-names, styles: default-styles)[body]`:
