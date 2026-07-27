@@ -21,7 +21,7 @@
   show: common-style
   show: front-matter-style.with(styles: styles)
 
-  align(dir, heading(level: 1, cjk-latin-style(
+  align(dir, heading(outlined: false, level: 1, cjk-latin-style(
     names.sections.at(lang).preface,
     size: styles.sizes.preface * 1pt,
     styles: styles,

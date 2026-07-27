@@ -189,9 +189,10 @@ Make sure `info.lang` matches a language key in `names` and `styles`.
 
 ### Visual Styles
 
-`styles` controls page sizes, spacing, font sizes, and font families.
-The default font platform is Windows. On macOS, compile with
-`--input qooklet-font-platform=macos` to prefer macOS system fonts.
+`styles` controls page sizes, spacing, font sizes, and font families. The font
+platform can be `windows` or `macos`; any other value fails fast. The default is
+Windows. On macOS, compile with `--input qooklet-font-platform=macos` to prefer
+macOS system fonts.
 
 ```toml
 [paper]
@@ -228,28 +229,14 @@ The default font platform is Windows. On macOS, compile with
 font-platform = "windows"
 
 [font-roles.en]
+    default = "text"
     chapter = "display"
-    chapter-index = "display"
-    cover = "display"
-    author = "latin"
-    date = "latin"
-    epigraph = "text"
-    preface = "text"
-    contents = "text"
-    part = "text"
     context = "text"
     math = "latin"
 
 [font-roles.zh]
+    default = "cjk-song"
     chapter = "cjk-kai"
-    chapter-index = "cjk-kai"
-    cover = "cjk-kai"
-    author = "cjk-kai"
-    date = "cjk-kai"
-    epigraph = "cjk-song"
-    preface = "cjk-song"
-    contents = "cjk-song"
-    part = "cjk-song"
     context = "cjk-song"
     math = "cjk-kai"
 
@@ -270,6 +257,8 @@ font-platform = "windows"
     cjk-kai = "KaiTi"
     cjk-song = "SimSun"
 ```
+
+See `0.1.0/src/config/styles.toml` for all available roles.
 
 ```typst
 #let styles = toml("config/styles.toml")
@@ -292,8 +281,10 @@ font-platform = "windows"
   epigraph page.
 - `preface(info: default-info, styles: default-styles, names: default-names)[body]`:
   creates a preface page.
-- `contents(depth: 2, info: default-info, styles: default-styles)`: creates a
-  table of contents. `depth` can be `1` or `2`.
+- `contents(depth: 1, info: default-info, styles: default-styles)`: creates a
+  table of contents. In note mode, `depth: 1` lists first-level headings and
+  `depth: 2` also lists second-level headings. In booklet mode, `depth: 1` lists
+  chapter and appendix titles, and `depth: 2` also lists first-level headings.
 - `part-page(title, info: default-info, styles: default-styles)`: creates a part
   divider page.
 
@@ -305,9 +296,11 @@ font-platform = "windows"
 - `appendix(...)`: same as `chapter()`, but uses appendix numbering.
 - `chapter-style(...)` and `appendix-style(...)`: compatibility helpers for older
   documents. Prefer `chapter()` and `appendix()` for new multi-chapter documents.
+  Repeated `#show: chapter-style.with(...)` rules can stack and recurse when many
+  later references are present.
 - `front-matter-style(styles: default-styles)[body]`: styles front matter pages.
 - `cover-style(styles: default-styles)[body]`: applies cover/booklet page style.
-- `contents-style(depth: 2, lang: "en", names: default-names, styles: default-styles)[body]`:
+- `contents-style(depth: 1, lang: "en", names: default-names, styles: default-styles)[body]`:
   lower-level table-of-contents style helper.
 
 ### Tables
