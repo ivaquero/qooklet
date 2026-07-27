@@ -3,12 +3,13 @@
 #let ctext(
   label,
   size: .8em,
-  font: font-for(default-styles, "zh", "math"),
   ..options,
 ) = styled-text(
   label,
   size: size,
-  font: font,
+  styles: default-styles,
+  lang: "zh",
+  role: "math",
   ..options,
 )
 

@@ -9,64 +9,23 @@
 #let latin-coverage() = regex("[\\p{Latin}\\p{Mark}0-9.,:;!?()\\[\\]'’\\-–—]")
 
 #let font-platform-for(styles) = {
-  sys.inputs.at(
+  let platform = sys.inputs.at(
     "qooklet-font-platform",
-    default: styles.at("font-platform", default: "default"),
+    default: styles.at("font-platform", default: "windows"),
   )
+  if platform == "macos" { "macos" } else { "windows" }
 }
-
-#let font-fallback-for(styles, platform, lang, role) = {
-  let fallback-fonts = styles.at("font-fallbacks", default: (:))
-  let platform-fonts = fallback-fonts.at(platform, default: (:))
-  if platform-fonts.keys().contains(lang) {
-    let lang-fonts = platform-fonts.at(lang)
-    if lang-fonts.keys().contains(role) and lang-fonts.at(role) != "" {
-      return lang-fonts.at(role)
-    }
-  }
-  none
-}
-
-#let base-font-for(styles, lang, role) = {
-  if styles.keys().contains("font-fallbacks") {
-    let platform = font-platform-for(styles)
-    for platform-name in (platform, "default") {
-      let font = font-fallback-for(styles, platform-name, lang, role)
-      if font != none {
-        return font
-      }
-    }
-  }
-
-  styles.fonts.at(lang).at(role)
-}
-
-#let font-for(styles, lang, role) = {
-  if lang == "zh-latin" {
-    if styles.keys().contains("font-fallbacks") {
-      let platform = font-platform-for(styles)
-      for platform-name in (platform, "default") {
-        let font = font-fallback-for(styles, platform-name, "zh-latin", role)
-        if font != none {
-          return font
-        }
-      }
-    }
-
-    return base-font-for(styles, "en", role)
-  }
-
-  let base-font = base-font-for(styles, lang, role)
-  if lang == "zh" {
-    return ((name: font-for(styles, "zh-latin", role), covers: latin-coverage()), base-font)
-  }
-  base-font
-}
-
-#let font-options(font) = if font == "" { (:) } else { (font: font) }
 
 #let font-role-options(styles, lang, role) = {
-  font-options(font-for(styles, lang, role))
+  let platform-fonts = styles.fonts.at(font-platform-for(styles))
+  let roles = styles.at("font-roles").at(lang)
+  let family = roles.at(role, default: roles.at("default", default: role))
+  let font = platform-fonts.at(family, default: family)
+  if lang == "zh" {
+    let latin-font = font-role-options(styles, "cjk-latin", role).font
+    return (font: ((name: latin-font, covers: latin-coverage()), font))
+  }
+  if font == "" { (:) } else { (font: font) }
 }
 
 #let styled-text(
@@ -78,30 +37,28 @@
   as-style: false,
   ..options,
 ) = {
-  let selected-font = if role == "" {
-    font
-  } else if lang == "zh" {
-    base-font-for(styles, lang, role)
+  let base-options = if role == "" {
+    if font == "" { (:) } else { (font: font) }
   } else {
-    font-for(styles, lang, role)
+    font-role-options(styles, lang, role)
   }
-  let apply-zh-latin = body => {
+  let apply-cjk-latin = body => {
     if lang == "zh" and role != "" {
       let text-weight = options.named().at("weight", default: "regular")
       show latin-coverage(): set text(
-        ..font-role-options(styles, "zh-latin", role),
+        ..font-role-options(styles, "cjk-latin", role),
         weight: text-weight,
       )
     }
     body
   }
   if as-style {
-    return apply-zh-latin(body)
+    return apply-cjk-latin(body)
   }
   if lang == "zh" and role != "" {
-    apply-zh-latin(text(body, ..font-options(selected-font), ..options))
+    apply-cjk-latin(text(body, ..base-options, ..options))
   } else {
-    text(body, ..font-options(selected-font), ..options)
+    text(body, ..base-options, ..options)
   }
 }
 
