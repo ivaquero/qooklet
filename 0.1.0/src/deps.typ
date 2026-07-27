@@ -6,7 +6,7 @@
 #let default-styles = toml("config/styles.toml")
 #let default-info = toml("config/info.toml").global
 
-#let latin-coverage = regex("[\\p{Latin}\\p{Mark}0-9.,:;!?()\\[\\]'’\\-–—]")
+#let latin-coverage() = regex("[\\p{Latin}\\p{Mark}0-9.,:;!?()\\[\\]'’\\-–—]")
 
 #let font-platform-for(styles) = {
   sys.inputs.at(
@@ -41,24 +41,24 @@
   styles.fonts.at(lang).at(role)
 }
 
-#let latin-font-for(styles, role) = {
-  if styles.keys().contains("font-fallbacks") {
-    let platform = font-platform-for(styles)
-    for platform-name in (platform, "default") {
-      let font = font-fallback-for(styles, platform-name, "zh-latin", role)
-      if font != none {
-        return font
+#let font-for(styles, lang, role) = {
+  if lang == "zh-latin" {
+    if styles.keys().contains("font-fallbacks") {
+      let platform = font-platform-for(styles)
+      for platform-name in (platform, "default") {
+        let font = font-fallback-for(styles, platform-name, "zh-latin", role)
+        if font != none {
+          return font
+        }
       }
     }
+
+    return base-font-for(styles, "en", role)
   }
 
-  base-font-for(styles, "en", role)
-}
-
-#let font-for(styles, lang, role) = {
   let base-font = base-font-for(styles, lang, role)
   if lang == "zh" {
-    return ((name: latin-font-for(styles, role), covers: latin-coverage), base-font)
+    return ((name: font-for(styles, "zh-latin", role), covers: latin-coverage()), base-font)
   }
   base-font
 }
@@ -75,6 +75,7 @@
   styles: default-styles,
   lang: "en",
   role: "",
+  as-style: false,
   ..options,
 ) = {
   let selected-font = if role == "" {
@@ -84,31 +85,24 @@
   } else {
     font-for(styles, lang, role)
   }
+  let apply-zh-latin = body => {
+    if lang == "zh" and role != "" {
+      let text-weight = options.named().at("weight", default: "regular")
+      show latin-coverage(): set text(
+        ..font-role-options(styles, "zh-latin", role),
+        weight: text-weight,
+      )
+    }
+    body
+  }
+  if as-style {
+    return apply-zh-latin(body)
+  }
   if lang == "zh" and role != "" {
-    let text-weight = options.named().at("weight", default: "regular")
-    show latin-coverage: set text(
-      font: latin-font-for(styles, role),
-      weight: text-weight,
-    )
-    text(body, ..font-options(selected-font), ..options)
+    apply-zh-latin(text(body, ..font-options(selected-font), ..options))
   } else {
     text(body, ..font-options(selected-font), ..options)
   }
-}
-
-#let zh-latin-style(
-  body,
-  styles: default-styles,
-  lang: "en",
-  role: "context",
-) = {
-  if lang == "zh" {
-    show latin-coverage: set text(
-      font: latin-font-for(styles, role),
-      weight: "regular",
-    )
-  }
-  body
 }
 
 #let tip = tip-block

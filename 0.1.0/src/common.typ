@@ -1,11 +1,14 @@
-#import "deps.typ": default-info, default-names, default-styles, font-role-options, latin-coverage, latin-font-for, styled-text, zh-latin-style
+#import "deps.typ": (
+  default-info, default-names, default-styles, font-role-options, styled-text,
+)
 
 #let book-state = state("book-state", false)
+#let book-page-count-started = state("book-page-count-started", false)
 
 #let fig-chapter = figure.where(kind: "chapter")
 #let fig-appendix = figure.where(kind: "appendix")
 #let fig-part = figure.where(kind: "part")
-#let fig-chapimg = figure.where(kind: "chapimg")
+#let fig-chapter-img = figure.where(kind: "chapter-img")
 
 #let counter-chapter = counter(fig-chapter)
 #let counter-appendix = counter(fig-appendix)

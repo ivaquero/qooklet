@@ -12,7 +12,7 @@
 
   show: book-style.with(styles: styles)
   show link: set text(black)
-  show: zh-latin-style.with(styles: styles, lang: lang, role: "contents")
+  show: styled-text.with(styles: styles, lang: lang, role: "contents", as-style: true)
   show heading.where(level: 1): it => {
     set text(
       size: styles.sizes.contents * 1pt,

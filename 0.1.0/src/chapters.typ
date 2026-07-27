@@ -11,12 +11,15 @@
 }
 
 #let page-has-book-first-heading() = {
-  book-state.get() and query(heading.where(level: 1))
-    .filter(h => (
-      h.location().page() == here().page()
-        and counter(heading).at(h.location()).first() == 1
-    ))
-    .len() > 0
+  (
+    book-state.get()
+      and query(heading.where(level: 1))
+        .filter(h => (
+          h.location().page() == here().page() and counter(heading).at(h.location()).first() == 1
+        ))
+        .len()
+        > 0
+  )
 }
 
 #let chapter-title(
@@ -41,6 +44,10 @@
     v(2em)
   } else {
     chapter-break()
+    context if not book-page-count-started.get() {
+      counter(page).update(1)
+      book-page-count-started.update(true)
+    }
     show figure.caption: none
     let chapter-idx = context prefixed-counter(prefix, "1", "A")
 
@@ -88,7 +95,7 @@
   block(place(right + bottom, dx: 1%, figure(
     img,
     placement: top,
-    kind: "chapimg",
+    kind: "chapter-img",
     supplement: none,
     numbering: _ => none,
     caption: title,
@@ -100,22 +107,28 @@
   lang: "en",
   styles: default-styles,
 ) = {
-  let apply-heading-sizes = range(1, 5).fold(it => it, (style-it, level) => it => {
-    show heading.where(level: level): it => {
-      set text(
-        size: styles.sizes.at("heading-" + str(level)) * 1pt,
-        weight: if level <= 3 { "bold" } else { "regular" },
-      )
-      if lang == "zh" {
-        show latin-coverage: set text(
-          font: latin-font-for(styles, "context"),
+  let apply-heading-sizes = range(1, 5).fold(
+    it => it,
+    (style-it, level) => it => {
+      show heading.where(level: level): it => {
+        set text(
+          size: styles.sizes.at("heading-" + str(level)) * 1pt,
           weight: if level <= 3 { "bold" } else { "regular" },
         )
+        if lang == "zh" {
+          show: styled-text.with(
+            styles: styles,
+            lang: lang,
+            role: "context",
+            as-style: true,
+            weight: if level <= 3 { "bold" } else { "regular" },
+          )
+        }
+        it
       }
-      it
-    }
-    style-it(it)
-  })
+      style-it(it)
+    },
+  )
   apply-heading-sizes(x)
   v(1em, weak: true)
 }
@@ -191,7 +204,7 @@
     ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
-  show: zh-latin-style.with(styles: styles, lang: lang, role: "context")
+  show: styled-text.with(styles: styles, lang: lang, role: "context", as-style: true)
 
   set page(
     header: context {
@@ -203,7 +216,7 @@
     },
     footer: context {
       set text(size: styles.sizes.footer * 1pt)
-      let page_num = here().page()
+      let page_num = counter(page).display()
       align-odd-even(footer, page_num)
     },
   )

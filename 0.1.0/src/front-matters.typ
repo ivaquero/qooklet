@@ -40,7 +40,7 @@
     ..font-role-options(styles, lang, "context"),
     lang: lang,
   )
-  show: zh-latin-style.with(styles: styles, lang: lang, role: "context")
+  show: styled-text.with(styles: styles, lang: lang, role: "context", as-style: true)
 
   v(2em)
   body
