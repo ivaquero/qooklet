@@ -100,7 +100,7 @@ Overall, your document should be structured like this:
 ```typ
 #import "@local/qooklet:0.1.0": *
 
-#let info = toml("../0.1.0/config/info.toml").example
+#let info = toml("../0.1.0/src/config/info.toml").example
 
 // add a cover
 #cover(info, date: datetime.today())

@@ -272,6 +272,8 @@ The default font platform is Windows. On macOS, compile with
   and theorem styling.
 - `appendix(...)`: same as `chapter()`, but uses appendix numbering.
 - `chapter-style(...)` and `appendix-style(...)`: lower-level compatibility helpers.
+  Prefer `chapter()` and `appendix()` for multi-chapter documents; repeated
+  `#show: chapter-style.with(...)` rules can recurse when references are present.
 - `front-matter-style(styles: default-styles)[body]`: styles front matter pages.
 - `cover-style(styles: default-styles)[body]`: applies cover/booklet page style.
 - `contents-style(depth: 2, lang: "en", names: default-names, styles: default-styles)[body]`:

@@ -150,10 +150,26 @@
 }
 
 #let align-odd-even(odd-left, odd-right) = {
-  if calc.odd(here().page()) {
-    align(right, [#odd-left #h(6fr) #odd-right])
+  let slots = if calc.odd(here().page()) {
+    (odd-left, odd-right)
   } else {
-    align(right, [#odd-right #h(6fr) #odd-left])
+    (odd-right, odd-left)
+  }
+  align(right, [#slots.at(0) #h(6fr) #slots.at(1)])
+}
+
+#let with-ref-style(
+  body,
+  enabled: false,
+  lang: "en",
+  names: default-names,
+  prefix: "chapter",
+) = {
+  if enabled {
+    show ref: ref-style.with(lang: lang, names: names).with(prefix: prefix)
+    body
+  } else {
+    body
   }
 }
 
@@ -166,6 +182,7 @@
   outline-on: false,
   prefix: "chapter",
   heading-depth: 3,
+  format-refs: false,
 ) = {
   assert(
     heading-depth in (1, 2, 3),
@@ -247,7 +264,6 @@
     it
   }
 
-  show ref: ref-style.with(lang: lang, names: names).with(prefix: prefix)
   show figure: figure-supplement-style.with(lang: lang, names: names)
   show figure.where(kind: table): set figure.caption(position: top)
   show raw.where(block: true): code-block-style
@@ -262,9 +278,16 @@
     set-theorion-numbering("A.1")
   }
   show: show-theorion
-  body
+
+  with-ref-style(
+    body,
+    enabled: format-refs,
+    lang: lang,
+    names: names,
+    prefix: prefix,
+  )
 }
 
 #let appendix-style = chapter-style.with(prefix: "appendix")
-#let chapter = chapter-style
-#let appendix = appendix-style
+#let chapter = chapter-style.with(format-refs: true)
+#let appendix = appendix-style.with(format-refs: true)
