@@ -53,7 +53,7 @@
 
     let bottom-pad = 10%
     block(height: 50%, grid(
-      columns: (10fr, 1fr, 2fr),
+      columns: (24fr, 1fr, 2fr),
       rows: (2fr, 12fr),
       align: (right + bottom, center, left + bottom),
       place(right + bottom, dx: -1%, pad(

@@ -12,6 +12,7 @@
   let fill = box(width: 1fr, x.fill)
   let prefix = x.prefix()
   let entry(body) = link(loc, body + fill + x.page() + v(0em))
+  let heading-entry(body) = entry(h(1em) + body)
 
   if (depth >= 1) and (x.element.func() == figure) {
     let entry-body = smallcaps(x.body())
@@ -29,20 +30,17 @@
     }
   } else if (depth == 2) and (x.level == 1) and (prefix != none) {
     let append-index = counter-appendix.at(loc).at(0)
-    if append-index != 0 {
-      default-outline-entry(x)
-    } else if prefix.has("children") {
-      let chapter-index = counter-chapter.at(loc).at(0)
-      entry(
-        h(1em)
-          + str(chapter-index)
-          + "."
-          + prefix.children.at(1)
-          + h(.5em)
-          + x.body(),
+    if prefix.has("children") {
+      let title-index = if append-index == 0 {
+        str(counter-chapter.at(loc).at(0))
+      } else {
+        appendix-number(append-index)
+      }
+      heading-entry(
+        title-index + "." + prefix.children.at(1) + h(.5em) + x.body(),
       )
     } else if prefix.has("text") {
-      entry(prefix + h(.5em) + x.body())
+      heading-entry(prefix + h(.5em) + x.body())
     } else {
       default-outline-entry(x)
     }
