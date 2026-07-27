@@ -34,7 +34,8 @@
     let fill = box(width: 1fr, x.fill)
     let loc = x.element.location()
     let prefix = x.prefix()
-    let bold-entry(body) = strong(body) + fill + x.page() + v(0em)
+    let entry(body) = link(loc, body + fill + x.page() + v(0em))
+    let bold-entry(body) = entry(strong(body))
 
     let chapter-index = counter-chapter.at(loc).at(0)
     let append-index = counter-appendix.at(loc).at(0)
@@ -45,38 +46,34 @@
 
       let kind = x.element.kind
       if kind == "part" {
-        link(loc, bold-entry(entry-body))
+        bold-entry(entry-body)
       } else if kind == "chapter" {
-        link(loc, chap-prefix + bold-entry(entry-body))
+        entry(chap-prefix + strong(entry-body))
       } else if kind == "appendix" {
         let append-prefix = appendix-number(append-index) + "." + h(0.5em)
-        link(loc, append-prefix + bold-entry(entry-body))
+        entry(append-prefix + strong(entry-body))
+      } else {
+        entry(x.body())
       }
     } else if (
       (depth == 2) and (x.level == 1) and (prefix != none) and (append-index == 0)
     ) {
-      link(
-        loc,
-        (
-          if prefix.has("children") {
-            (
-              h(styles.spaces.contents-indent * 1em)
-                + str(chapter-index)
-                + "."
-                + prefix.children.at(1)
-                + h(.5em)
-                + x.body()
-                + fill
-                + x.page()
-                + v(0em)
-            )
-          } else if prefix.has("text") {
-            (
-              prefix + h(.5em) + x.body() + fill + x.page() + v(0em)
-            )
-          }
-        ),
-      )
+      if prefix.has("children") {
+        entry(
+          h(styles.spaces.contents-indent * 1em)
+            + str(chapter-index)
+            + "."
+            + prefix.children.at(1)
+            + h(.5em)
+            + x.body(),
+        )
+      } else if prefix.has("text") {
+        entry(prefix + h(.5em) + x.body())
+      } else {
+        entry(x.body())
+      }
+    } else {
+      entry(x.body())
     }
   }
   cjk-latin-style(body, styles: styles, lang: lang, role: "contents")

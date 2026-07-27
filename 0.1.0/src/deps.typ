@@ -13,7 +13,11 @@
     "qooklet-font-platform",
     default: styles.at("font-platform", default: "windows"),
   )
-  if platform == "macos" { "macos" } else { "windows" }
+  assert(
+    platform in ("windows", "macos"),
+    message: "qooklet-font-platform must be either \"windows\" or \"macos\"",
+  )
+  platform
 }
 
 #let font-role-options(styles, lang, role) = {

@@ -58,7 +58,7 @@ The local package keeps the version at `0.1.0` for development convenience.
 
 ### Note Mode
 
-Use note mode when you only need a chapter-style document without cover pages or
+Use note mode when you only need a chapter-based document without cover pages or
 front matter.
 
 ```typst
@@ -225,18 +225,50 @@ The default font platform is Windows. On macOS, compile with
     header = 8
     footer = 8
 
-[fonts.en]
-    chapter = "Palatino"
-    chapter-index = "Palatino"
-    cover = "Palatino"
-    author = "Times New Roman"
-    date = "Times New Roman"
-    epigraph = "Georgia"
-    preface = "Georgia"
-    contents = "Georgia"
-    part = "Georgia"
-    context = "Georgia"
-    math = "Times New Roman"
+font-platform = "windows"
+
+[font-roles.en]
+    chapter = "display"
+    chapter-index = "display"
+    cover = "display"
+    author = "latin"
+    date = "latin"
+    epigraph = "text"
+    preface = "text"
+    contents = "text"
+    part = "text"
+    context = "text"
+    math = "latin"
+
+[font-roles.zh]
+    chapter = "cjk-kai"
+    chapter-index = "cjk-kai"
+    cover = "cjk-kai"
+    author = "cjk-kai"
+    date = "cjk-kai"
+    epigraph = "cjk-song"
+    preface = "cjk-song"
+    contents = "cjk-song"
+    part = "cjk-song"
+    context = "cjk-song"
+    math = "cjk-kai"
+
+[font-roles.cjk-latin]
+    default = "latin"
+
+[fonts.macos]
+    display = "Palatino"
+    text = "Georgia"
+    latin = "Times New Roman"
+    cjk-kai = "Kaiti SC"
+    cjk-song = "Songti SC"
+
+[fonts.windows]
+    display = "Palatino Linotype"
+    text = "Georgia"
+    latin = "Times New Roman"
+    cjk-kai = "KaiTi"
+    cjk-song = "SimSun"
 ```
 
 ```typst
@@ -271,9 +303,8 @@ The default font platform is Windows. On macOS, compile with
   applies chapter layout, headers, footers, heading styles, numbering, references,
   and theorem styling.
 - `appendix(...)`: same as `chapter()`, but uses appendix numbering.
-- `chapter-style(...)` and `appendix-style(...)`: lower-level compatibility helpers.
-  Prefer `chapter()` and `appendix()` for multi-chapter documents; repeated
-  `#show: chapter-style.with(...)` rules can recurse when references are present.
+- `chapter-style(...)` and `appendix-style(...)`: compatibility helpers for older
+  documents. Prefer `chapter()` and `appendix()` for new multi-chapter documents.
 - `front-matter-style(styles: default-styles)[body]`: styles front matter pages.
 - `cover-style(styles: default-styles)[body]`: applies cover/booklet page style.
 - `contents-style(depth: 2, lang: "en", names: default-names, styles: default-styles)[body]`:

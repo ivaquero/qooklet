@@ -182,7 +182,7 @@
   outline-on: false,
   prefix: "chapter",
   heading-depth: 3,
-  format-refs: false,
+  format-refs: true,
 ) = {
   assert(
     heading-depth in (1, 2, 3),
@@ -289,5 +289,5 @@
 }
 
 #let appendix-style = chapter-style.with(prefix: "appendix")
-#let chapter = chapter-style.with(format-refs: true)
-#let appendix = appendix-style.with(format-refs: true)
+#let chapter = chapter-style
+#let appendix = appendix-style
