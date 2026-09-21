@@ -33,7 +33,7 @@ set of configurable TOML files.
 ### From Typst Universe
 
 ```typst
-#import "@preview/qooklet:0.7.1": *
+#import "@preview/qooklet:0.7.2": *
 ```
 
 ### From a Local Checkout
@@ -62,7 +62,7 @@ Use note mode when you only need a chapter-based document without cover pages or
 front matter.
 
 ```typst
-#import "@preview/qooklet:0.7.1": *
+#import "@preview/qooklet:0.7.2": *
 
 #let info = (
   title: "Qooklet Note",
@@ -90,7 +90,7 @@ Your content starts here.
 Calling `cover()` switches the document to booklet mode.
 
 ```typst
-#import "@preview/qooklet:0.7.1": *
+#import "@preview/qooklet:0.7.2": *
 
 #let info = (
   title: "Qooklet Booklet",
