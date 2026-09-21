@@ -19,14 +19,12 @@
   let dir = if lang == "zh" { center } else { left }
 
   show: common-style
-  show: front-matter-style.with(styles: styles)
+  show: front-matter-style
 
-  align(dir, heading(level: 1, cjk-latin-style(
+  align(dir, heading(level: 1, text(
     names.sections.at(lang).preface,
     size: styles.sizes.preface * 1pt,
-    styles: styles,
-    lang: lang,
-    role: "preface",
+    font: styles.fonts.at(lang).preface,
   )))
 
   show heading.where(level: 1): it => {
@@ -37,16 +35,15 @@
 
   set text(
     size: styles.sizes.context * 1pt,
-    ..font-role-options(styles, lang, "context"),
+    font: styles.fonts.at(lang).context,
     lang: lang,
   )
-  show: cjk-latin-style.with(styles: styles, lang: lang, role: "context", as-style: true)
 
   v(2em)
   body
   v(2em)
 
-  align(right, emph(cjk-latin-style(author, styles: styles, lang: lang, role: "author")))
+  align(right, emph(author))
   pagebreak(to: "odd")
 }
 
@@ -55,19 +52,17 @@
   info: default-info,
   styles: default-styles,
 ) = {
-  show: front-matter-style.with(styles: styles)
+  show: front-matter-style
+  show: book-style.with(styles: styles)
   show figure.caption: none
 
   let lang = info.lang
 
   align(center + horizon, figure(
-    cjk-latin-style(
-      title,
+    text(
+      strong(title),
       size: styles.sizes.part * 1pt,
-      styles: styles,
-      lang: lang,
-      role: "part",
-      weight: "bold",
+      font: styles.fonts.at(lang).part,
     ),
     kind: "part",
     supplement: none,

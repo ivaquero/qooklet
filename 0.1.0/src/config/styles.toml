@@ -1,6 +1,3 @@
-# Override with: typst compile --input qooklet-font-platform=macos
-font-platform = "windows"
-
 [paper]
 note = "a4"
 booklet = "iso-b5"
@@ -32,45 +29,28 @@ context = 10.5
 header = 8
 footer = 8
 
-[font-roles.en]
-chapter = "display"
-chapter-index = "display"
-cover = "display"
-author = "latin"
-date = "latin"
-epigraph = "text"
-preface = "text"
-contents = "text"
-part = "text"
-context = "text"
-math = "latin"
+[fonts.en]
+chapter = ["Palatino Linotype", "Palatino"]
+chapter-index = ["Palatino Linotype", "Palatino"]
+cover = ["Palatino Linotype", "Palatino"]
+author = ["Times New Roman"]
+date = ["Times New Roman"]
+math = ["Times New Roman"]
+epigraph = ["Georgia"]
+preface = ["Georgia"]
+contents = ["Georgia"]
+part = ["Georgia"]
+context = ["Georgia"]
 
-[font-roles.zh]
-chapter = "cjk-kai"
-chapter-index = "cjk-kai"
-cover = "cjk-kai"
-author = "cjk-kai"
-date = "cjk-kai"
-epigraph = "cjk-song"
-preface = "cjk-song"
-contents = "cjk-song"
-part = "cjk-song"
-context = "cjk-song"
-math = "cjk-kai"
-
-[font-roles.cjk-latin]
-default = "latin"
-
-[fonts.macos]
-display = "Palatino"
-text = "Georgia"
-latin = "Times New Roman"
-cjk-kai = "Kaiti SC"
-cjk-song = "Songti SC"
-
-[fonts.windows]
-display = "Palatino Linotype"
-text = "Georgia"
-latin = "Times New Roman"
-cjk-kai = "KaiTi"
-cjk-song = "SimSun"
+[fonts.zh]
+chapter = ["Kaiti SC", "STKaiti"]
+chapter-index = ["Kaiti SC", "STKaiti"]
+cover = ["Kaiti SC", "STKaiti"]
+author = ["Kaiti SC", "STKaiti"]
+date = ["Kaiti SC", "STKaiti"]
+math = ["Kaiti SC", "STKaiti"]
+epigraph = ["SimSun", "STSong"]
+preface = ["SimSun", "STSong"]
+contents = ["SimSun", "STSong"]
+part = ["SimSun", "STSong"]
+context = ["SimSun", "STSong"]

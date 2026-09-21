@@ -18,30 +18,24 @@
   let author = info.author
 
   align(center + horizon, [
-    #cjk-latin-style(
+    #text(
       title,
+      font: styles.fonts.at(lang).cover,
       size: styles.sizes.cover * 1pt,
-      styles: styles,
-      lang: lang,
-      role: "cover",
       weight: "bold",
     )
     #v(1em)
-    #cjk-latin-style(
+    #text(
       author,
+      font: styles.fonts.at(lang).author,
       size: styles.sizes.author * 1pt,
-      styles: styles,
-      lang: lang,
-      role: "author",
     )
     #if date != none {
       v(1em)
-      cjk-latin-style(
+      text(
         date.display(),
+        font: styles.fonts.at(lang).date,
         size: styles.sizes.date * 1pt,
-        styles: styles,
-        lang: lang,
-        role: "date",
       )
     }
   ])
@@ -55,11 +49,9 @@
   show: cover-style.with(styles: styles)
 
   let lang = info.lang
-  align(center + horizon, cjk-latin-style(
+  align(center + horizon, text(
     body,
+    font: styles.fonts.at(lang).epigraph,
     size: styles.sizes.epigraph * 1pt,
-    styles: styles,
-    lang: lang,
-    role: "epigraph",
   ))
 }

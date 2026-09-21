@@ -1,4 +1,4 @@
-#import "deps.typ": cjk-latin-style, default-info, default-names, default-styles, font-role-options
+#import "deps.typ": default-info, default-names, default-styles
 
 #let book-state = state("book-state", false)
 #let book-page-count-started = state("book-page-count-started", false)

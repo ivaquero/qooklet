@@ -3,13 +3,12 @@
 #let ctext(
   label,
   size: .8em,
-  ..options,
-) = cjk-latin-style(
-  label,
-  size: size,
-  styles: default-styles,
   lang: "zh",
-  role: "math",
+  ..options,
+) = text(
+  label,
+  font: default-styles.fonts.at(lang).math,
+  size: size,
   ..options,
 )
 

@@ -9,6 +9,24 @@
   }
 }
 
+#let note-equation-format(prefix) = {
+  if prefix == "appendix" { "(a.1)" } else { "(1.1)" }
+}
+
+#let equation-number-at(loc, index, prefix: "chapter") = {
+  if book-state.get() {
+    let title-index = equation-prefix-at(loc, prefix)
+    numbering(n => "(" + str(title-index) + "." + str(n) + ")", index)
+  } else {
+    let h1 = counter(heading).at(loc).first()
+    numbering(note-equation-format(prefix), h1, index)
+  }
+}
+
+#let equation-numbering(prefix: "chapter") = {
+  n => equation-number-at(here(), n, prefix: prefix)
+}
+
 #let heading-numbering-at(loc) = {
   let nums = counter(heading).at(loc)
   if book-state.get() {
@@ -30,22 +48,7 @@
       let loc = it.location()
       math.equation(
         block: true,
-        numbering: if book-state.get() {
-          let title-index = equation-prefix-at(loc, prefix)
-          n => {
-            "(" + str(title-index) + "." + str(n) + ")"
-          }
-        } else {
-          let h1 = counter(heading).at(loc).first()
-          let num-style = if prefix == "chapter" {
-            "(1.1)"
-          } else if (
-            prefix == "appendix"
-          ) { "(a.1)" }
-          n => {
-            numbering(num-style, h1, n)
-          }
-        },
+        numbering: n => equation-number-at(loc, n, prefix: prefix),
         it,
       )
     } else {
@@ -68,28 +71,10 @@
   let loc = el.location()
   if el.func() == math.equation {
     let eq-index = counter(math.equation).at(loc).first()
-    if book-state.get() {
-      let title-index = equation-prefix-at(loc, prefix)
-      (
-        names.blocks.at(lang).equation
-          + link(loc, numbering(
-            n => {
-              "(" + str(title-index) + "." + str(n) + ")"
-            },
-            eq-index + 1,
-          ))
-      )
-    } else {
-      let h1 = counter(heading).at(loc).first()
-      let num-style = if prefix == "chapter" {
-        "(1.1)"
-      } else if (
-        prefix == "appendix"
-      ) { "(a.1)" }
-      (
-        names.blocks.at(lang).equation + link(loc, numbering(num-style, h1, eq-index + 1))
-      )
-    }
+    (
+      names.blocks.at(lang).equation
+        + link(loc, equation-number-at(loc, eq-index + 1, prefix: prefix))
+    )
   } else if el.func() == heading {
     link(loc, el.supplement + [ ] + heading-numbering-at(loc))
   } else if el.func() == figure {

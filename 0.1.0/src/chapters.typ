@@ -29,12 +29,10 @@
   styles: default-styles,
   chapter-break: () => pagebreak(weak: true, to: "odd"),
 ) = {
-  let the-title = cjk-latin-style(
+  let the-title = text(
     title,
     size: styles.sizes.chapter * 1pt,
-    styles: styles,
-    lang: lang,
-    role: "chapter",
+    font: styles.fonts.at(lang).chapter,
     style: "italic",
     weight: "bold",
   )
@@ -53,7 +51,7 @@
 
     let bottom-pad = 10%
     block(height: 50%, grid(
-      columns: (10fr, 1fr, 2fr),
+      columns: (24fr, 1fr, 2fr),
       rows: (2fr, 12fr),
       align: (right + bottom, center, left + bottom),
       place(right + bottom, dx: -1%, pad(
@@ -67,12 +65,10 @@
         bottom: bottom-pad,
       )),
       line(angle: 90deg, length: 100%),
-      pad(cjk-latin-style(
+      pad(text(
         chapter-idx,
         size: styles.sizes.chapter-index * 1pt,
-        styles: styles,
-        lang: lang,
-        role: "chapter-index",
+        font: styles.fonts.at(lang).chapter-index,
         weight: "bold",
       )),
     ))
@@ -107,29 +103,19 @@
   lang: "en",
   styles: default-styles,
 ) = {
-  let apply-heading-sizes = range(1, 5).fold(
-    it => it,
-    (style-it, level) => it => {
-      show heading.where(level: level): it => {
-        set text(
-          size: styles.sizes.at("heading-" + str(level)) * 1pt,
-          weight: if level <= 3 { "bold" } else { "regular" },
-        )
-        if lang == "zh" {
-          show: cjk-latin-style.with(
-            styles: styles,
-            lang: lang,
-            role: "context",
-            as-style: true,
-            weight: if level <= 3 { "bold" } else { "regular" },
-          )
-        }
-        it
-      }
-      style-it(it)
-    },
+  show heading.where(level: 1): set text(
+    size: styles.sizes.heading-1 * 1pt,
   )
-  apply-heading-sizes(x)
+  show heading.where(level: 2): set text(
+    size: styles.sizes.heading-2 * 1pt,
+  )
+  show heading.where(level: 3): set text(
+    size: styles.sizes.heading-3 * 1pt,
+  )
+  show heading.where(level: 4): set text(
+    size: styles.sizes.heading-4 * 1pt,
+  )
+  x
   v(1em, weak: true)
 }
 
@@ -182,7 +168,8 @@
   outline-on: false,
   prefix: "chapter",
   heading-depth: 3,
-  format-refs: true,
+  format-refs: false,
+  full-style: false,
 ) = {
   assert(
     heading-depth in (1, 2, 3),
@@ -212,10 +199,9 @@
 
   set text(
     size: styles.sizes.context * 1pt,
-    ..font-role-options(styles, lang, "context"),
+    font: styles.fonts.at(lang).context,
     lang: lang,
   )
-  show: cjk-latin-style.with(styles: styles, lang: lang, role: "context", as-style: true)
 
   set page(
     header: context {
@@ -245,28 +231,17 @@
     chapter-break: chapter-odd-pagebreak,
   ))
 
-  show heading: heading-size-style.with(lang: lang, styles: styles)
+  set math.cases(gap: .85em)
+  set math.equation(numbering: equation-numbering(prefix: prefix))
   set heading(numbering: (..numbers) => heading-numbering(
     ..numbers,
     prefix: prefix,
     heading-depth: heading-depth,
   ))
 
-  if outline-on {
-    outline(depth: 2)
-    pagebreak()
-  }
-
-  set math.cases(gap: .85em)
-  show math.equation: equation-numbering-style.with(prefix: prefix)
-  show heading.where(level: 1): it => {
-    counter(math.equation).update(0)
-    it
-  }
-
+  // Theorem environments (theorion) are styled even without `full-style`, otherwise
+  // their figures fall back to Typst's default caption.
   show figure: figure-supplement-style.with(lang: lang, names: names)
-  show figure.where(kind: table): set figure.caption(position: top)
-  show raw.where(block: true): code-block-style
 
   context if book-state.get() {
     set-inherited-levels(0)
@@ -279,15 +254,35 @@
   }
   show: show-theorion
 
-  with-ref-style(
-    body,
-    enabled: format-refs,
-    lang: lang,
-    names: names,
-    prefix: prefix,
-  )
+  if full-style {
+    show heading: heading-size-style.with(lang: lang, styles: styles)
+
+    if outline-on {
+      outline(depth: 2)
+      pagebreak()
+    }
+
+    show math.equation: equation-numbering-style.with(prefix: prefix)
+    show heading.where(level: 1): it => {
+      counter(math.equation).update(0)
+      it
+    }
+
+    show figure.where(kind: table): set figure.caption(position: top)
+    show raw.where(block: true): code-block-style
+
+    with-ref-style(
+      body,
+      enabled: format-refs,
+      lang: lang,
+      names: names,
+      prefix: prefix,
+    )
+  } else {
+    body
+  }
 }
 
 #let appendix-style = chapter-style.with(prefix: "appendix")
-#let chapter = chapter-style
-#let appendix = appendix-style
+#let chapter = chapter-style.with(full-style: true, format-refs: true)
+#let appendix = appendix-style.with(full-style: true, format-refs: true)
